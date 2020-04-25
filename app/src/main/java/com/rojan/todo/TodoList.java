@@ -23,6 +23,7 @@ public class TodoList extends AppCompatActivity {
     private void init(){
         listTodo = (RecyclerView) findViewById(R.id.listTodo);
 
+        // setting up the adapters for recycler view
         listTodo.setLayoutManager(new LinearLayoutManager(this));
         TodoListAdapter adapter = new TodoListAdapter();
         listTodo.setAdapter(adapter);

@@ -47,6 +47,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoLi
 
         public TodoListViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            // initializing the variables
             lblTitle = (TextView) itemView.findViewById(R.id.lblTitle);
             lblDescription = (TextView) itemView.findViewById(R.id.lblDescription);
             lblDueDate = (TextView) itemView.findViewById(R.id.lblDueDate);
