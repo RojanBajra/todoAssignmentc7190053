@@ -23,9 +23,6 @@ public class TodoList extends AppCompatActivity {
     private void init(){
         listTodo = (RecyclerView) findViewById(R.id.listTodo);
 
-//        hostelList.setLayoutManager(new LinearLayoutManager(this));
-//        hostelList.setAdapter(new HostelListAdapter(nameOfHostels, this));
-
         listTodo.setLayoutManager(new LinearLayoutManager(this));
         TodoListAdapter adapter = new TodoListAdapter();
         listTodo.setAdapter(adapter);
