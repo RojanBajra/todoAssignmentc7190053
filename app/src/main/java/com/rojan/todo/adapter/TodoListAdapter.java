@@ -26,7 +26,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (position == 0){
             return R.layout.stats_for_todo_list;
         }else{
-            return R.layout.activity_todo_list;
+            return R.layout.todo_list;
         }
     }
 
@@ -37,7 +37,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view;
 
         switch (viewType){
-            case R.layout.activity_todo_list:
+            case R.layout.todo_list:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todo_list, parent, false);
                 holder = new TodoListViewHolder(view);
                 break;
