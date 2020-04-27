@@ -1,31 +1,29 @@
 package com.rojan.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import com.rojan.todo.adapter.TodoListAdapter;
 
 public class TodoList extends AppCompatActivity {
 
-    private RecyclerView listTodo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
-        init();
+        loadFragment();
     }
 
-    // initializing variables
-    private void init(){
-        listTodo = (RecyclerView) findViewById(R.id.listTodo);
-
-        // setting up the adapters for recycler view
-        listTodo.setLayoutManager(new LinearLayoutManager(this));
-        TodoListAdapter adapter = new TodoListAdapter();
-        listTodo.setAdapter(adapter);
+    private void loadFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment listTodoFragment = new TodoListFragment(this);
+        fragmentManager.beginTransaction().add(R.id.frameContainer, listTodoFragment).commit();
     }
+
 }
