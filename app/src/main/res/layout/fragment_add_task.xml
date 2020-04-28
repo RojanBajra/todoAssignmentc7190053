@@ -78,4 +78,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:hint="Date"/>
 
+    <Button
+        android:id="@+id/btnDatePicker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTransparent"
+        app:layout_constraintTop_toTopOf="@id/txtTaskDate"
+        app:layout_constraintLeft_toLeftOf="@id/txtTaskDate"
+        app:layout_constraintRight_toRightOf="@id/txtTaskDate"
+        app:layout_constraintBottom_toBottomOf="@id/txtTaskDate"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
