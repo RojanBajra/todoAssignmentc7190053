@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Todo</string>
+    <string name="addPage">Add a Todo Task</string>
+
 </resources>
