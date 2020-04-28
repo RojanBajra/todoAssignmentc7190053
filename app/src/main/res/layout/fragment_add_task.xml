@@ -33,16 +33,16 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lblTaskTitle"
-        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Title"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Title"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTaskTitle" />
 
     <TextView
-        android:layout_marginTop="16dp"
         android:id="@+id/lblTaskDesription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Task Description"
         android:textColor="@color/colorBlack"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -53,16 +53,16 @@
         android:id="@+id/txtDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lblTaskDesription"
-        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Description"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Description"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTaskDesription" />
 
     <TextView
-        android:layout_marginTop="16dp"
         android:id="@+id/lblTaskDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Task Date"
         android:textColor="@color/colorBlack"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -73,19 +73,50 @@
         android:id="@+id/txtTaskDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lblTaskDate"
-        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Date"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Date"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTaskDate" />
 
     <Button
         android:id="@+id/btnDatePicker"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorTransparent"
-        app:layout_constraintTop_toTopOf="@id/txtTaskDate"
+        app:layout_constraintBottom_toBottomOf="@id/txtTaskDate"
         app:layout_constraintLeft_toLeftOf="@id/txtTaskDate"
         app:layout_constraintRight_toRightOf="@id/txtTaskDate"
-        app:layout_constraintBottom_toBottomOf="@id/txtTaskDate"/>
+        app:layout_constraintTop_toTopOf="@id/txtTaskDate" />
+
+    <TextView
+        android:id="@+id/lblTaskTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Task Time"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTaskDate" />
+
+    <EditText
+        android:id="@+id/txtTaskTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Time"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTaskTime" />
+
+    <Button
+        android:id="@+id/btnTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTransparent"
+        app:layout_constraintBottom_toBottomOf="@id/txtTaskTime"
+        app:layout_constraintLeft_toLeftOf="@id/txtTaskTime"
+        app:layout_constraintRight_toRightOf="@id/txtTaskTime"
+        app:layout_constraintTop_toTopOf="@id/txtTaskTime" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

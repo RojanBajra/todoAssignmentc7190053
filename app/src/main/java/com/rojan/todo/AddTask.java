@@ -24,7 +24,7 @@ public class AddTask extends AppCompatActivity {
 
     private void loadFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment listTodoFragment = new AddTaskFragment(this);
+        Fragment listTodoFragment = new AddTaskFragment(this, this);
         fragmentManager.beginTransaction().add(R.id.frameContainer, listTodoFragment).commit();
     }
 }
