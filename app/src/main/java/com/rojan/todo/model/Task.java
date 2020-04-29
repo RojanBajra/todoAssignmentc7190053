@@ -1,20 +1,27 @@
 package com.rojan.todo.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity()
 public class Task {
 
+    @PrimaryKey(autoGenerate = true)
     private int taskId;
     private String taskName;
     private String taskDescription;
     private Date taskDate;
     private Date taskTime;
     private boolean isCompleted;
-    private String priority;
+    private int priority;
     private Date createdOn;
     private Date updatedOn;
 
-    public Task(String taskName, String taskDescription, Date taskDate, Date taskTime, boolean isCompleted, String priority, Date createdOn, Date updatedOn){
+    @Ignore
+    public Task(String taskName, String taskDescription, Date taskDate, Date taskTime, boolean isCompleted, int priority, Date createdOn, Date updatedOn){
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDate = taskDate;
@@ -25,7 +32,7 @@ public class Task {
         this.updatedOn = updatedOn;
     }
 
-    public Task(int taskId, String taskName, String taskDescription, Date taskDate, Date taskTime, boolean isCompleted, String priority, Date createdOn, Date updatedOn){
+    public Task(int taskId, String taskName, String taskDescription, Date taskDate, Date taskTime, boolean isCompleted, int priority, Date createdOn, Date updatedOn){
         this.taskId = taskId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -85,11 +92,11 @@ public class Task {
         isCompleted = completed;
     }
 
-    public String getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
