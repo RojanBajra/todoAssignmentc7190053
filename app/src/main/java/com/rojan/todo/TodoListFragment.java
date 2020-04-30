@@ -23,15 +23,9 @@ public class TodoListFragment extends Fragment {
 
     private RecyclerView listTodo;
     private FloatingActionButton floatingActionButton;
-    private Context context;
 
     public TodoListFragment(){
 
-    }
-
-    public TodoListFragment(Context context) {
-        // Required empty public constructor
-        this.context = context;
     }
 
     @Override
@@ -39,6 +33,12 @@ public class TodoListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+        init(view);
+
+        return view;
+    }
+
+    private void init(View view){
         listTodo = (RecyclerView) view.findViewById(R.id.listTodo);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabAddTask);
 
@@ -49,14 +49,12 @@ public class TodoListFragment extends Fragment {
             }
         });
 
-        listTodo.setLayoutManager(new LinearLayoutManager(context));
+        listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
         TodoListAdapter adapter = new TodoListAdapter();
         listTodo.setAdapter(adapter);
-
-        return view;
     }
 
     public void btnAddTask() {
-        startActivity(AddTask.makeIntent(context));
+        startActivity(AddTask.makeIntent(getActivity()));
     }
 }

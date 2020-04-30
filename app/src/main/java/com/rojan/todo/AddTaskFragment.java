@@ -41,9 +41,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private AddTaskFragmentViewModel viewModel;
 
-    private Context context;
-    private Activity activity;
-
     public AddTaskFragment(){
 
     }
@@ -53,10 +50,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 //        this.context = context;
 //        this.activity = activity;
 //    }
-
-    public void setupContext(){
-        this.context = getActivity();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +84,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtDescription = view.findViewById(R.id.txtDescription);
 
         lblTaskTitle = view.findViewById(R.id.lblTaskTitle);
+        lblTaskTitle.setText("Task Title");
         lblDescription = view.findViewById(R.id.lblTaskDesription);
         lblTaskDate = view.findViewById(R.id.lblTaskDate);
         lblPriority = view.findViewById(R.id.lblPriority);
@@ -106,9 +100,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         // view model
         viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
         //viewModel.init();
-
-        // setting up context
-        setupContext();
 
         addActionListeners();
     }
@@ -136,7 +127,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void showDatePicker(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                context,
+                getActivity(),
                 this,
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
@@ -148,7 +139,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void showTimePicker(){
         TimePickerDialog timePickerDialog = new TimePickerDialog(
-                context,
+                getActivity(),
                 this,
                 Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
                 Calendar.getInstance().get(Calendar.MINUTE),
@@ -174,14 +165,14 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         checkingSingleTextField(txtTitle, lblTaskTitle, "Task Title (*required)");
         checkingSingleTextField(txtDescription, lblDescription, "Task Description (*required)");
         checkingSingleTextField(txtTaskDate, lblTaskDate, "Task Date (*required)");
-        txtTaskDate.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+        txtTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
         // priority is left to do
     }
 
     private void checkingSingleTextField(EditText editText, TextView textView, String message){
         if (editText.getText().toString().isEmpty()){
             textView.setText(message);
-            textView.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+            textView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
         }
     }
 
@@ -193,10 +184,10 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     }
 
     private void changeTextColorToBlack(){
-        lblTaskTitle.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
-        lblDescription.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
-        lblTaskDate.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
-        lblPriority.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+        lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
+        lblDescription.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
+        lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
+        lblPriority.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
     }
 
 }

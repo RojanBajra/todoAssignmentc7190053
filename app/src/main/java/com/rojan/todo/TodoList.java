@@ -25,7 +25,7 @@ public class TodoList extends AppCompatActivity {
 
     private void loadFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment listTodoFragment = new TodoListFragment(this);
+        Fragment listTodoFragment = new TodoListFragment();
         fragmentManager.beginTransaction().add(R.id.frameContainer, listTodoFragment).commit();
     }
 
