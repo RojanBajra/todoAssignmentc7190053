@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+
+import com.rojan.todo.viewModel.AddTaskFragmentViewModel;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -30,6 +35,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     Button btnDatePicker, btnTimePicker;
     EditText txtTaskDate, txtTaskTime;
     Activity activity;
+
+    private AddTaskFragmentViewModel viewModel;
 
     private Context context;
     public AddTaskFragment(Context context, Activity activity) {
@@ -69,6 +76,10 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         // For time picker
         btnTimePicker = (Button) view.findViewById(R.id.btnTimePicker);
         txtTaskTime = (EditText) view.findViewById(R.id.txtTaskTime);
+
+        // view model
+        viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
+        viewModel.init();
 
         addActionListeners();
     }
