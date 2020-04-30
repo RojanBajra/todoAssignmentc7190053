@@ -25,6 +25,10 @@ public class TodoListFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private Context context;
 
+    public TodoListFragment(){
+
+    }
+
     public TodoListFragment(Context context) {
         // Required empty public constructor
         this.context = context;

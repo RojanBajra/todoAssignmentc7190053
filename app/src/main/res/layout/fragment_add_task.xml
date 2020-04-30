@@ -115,7 +115,7 @@
                 android:id="@+id/txtTaskTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Time"
+                android:hint="Default time used will be 5.00"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblTaskTime" />
@@ -184,15 +184,15 @@
             </RadioGroup>
 
             <Button
+                android:id="@+id/btnAddTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                 android:text="Add Task"
-                android:id="@+id/btnAddTas"
-                app:layout_constraintTop_toBottomOf="@id/radioGroup"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorWhite"/>
+                app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

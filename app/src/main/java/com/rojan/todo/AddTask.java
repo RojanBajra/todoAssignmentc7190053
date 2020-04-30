@@ -19,12 +19,19 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        loadFragment();
+        System.out.println("is this calling this again");
+//        viewModel = ViewModelProviders.of(this).get(AddTaskViewModel.class);
+        if (savedInstanceState == null){
+            loadFragment();
+        }
     }
 
     private void loadFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment listTodoFragment = new AddTaskFragment(this, this);
-        fragmentManager.beginTransaction().add(R.id.frameContainer, listTodoFragment).commit();
+        Fragment addTaskFragment = new AddTaskFragment();
+        fragmentManager.beginTransaction().add(R.id.frameContainer, addTaskFragment).commit();
+
+//        viewModel.fragment = new AddTaskFragment();
+//        fragmentManager.beginTransaction().add(R.id.frameContainer, viewModel.fragment).commit();
     }
 }

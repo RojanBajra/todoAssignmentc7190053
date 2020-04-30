@@ -18,7 +18,9 @@ public class TodoList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
-        loadFragment();
+        if(savedInstanceState == null){
+            loadFragment();
+        }
     }
 
     private void loadFragment(){

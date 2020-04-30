@@ -71,7 +71,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 0;
     }
 
     public class TodoListViewHolder extends RecyclerView.ViewHolder{

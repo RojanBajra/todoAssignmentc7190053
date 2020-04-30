@@ -8,9 +8,6 @@ public class AddTaskFragmentViewModel extends ViewModel {
 
     public AddTaskFragmentViewModel(){
         super();
-    }
-
-    public void init(){
         valTitle = "";
         valDescription = "";
         valDate = "";
@@ -18,4 +15,43 @@ public class AddTaskFragmentViewModel extends ViewModel {
         valPriority = "";
     }
 
+    public String getValTitle() {
+        return valTitle;
+    }
+
+    public void setValTitle(String valTitle) {
+        this.valTitle = valTitle;
+    }
+
+    public String getValDescription() {
+        return valDescription;
+    }
+
+    public void setValDescription(String valDescription) {
+        this.valDescription = valDescription;
+    }
+
+    public String getValDate() {
+        return valDate;
+    }
+
+    public void setValDate(String valDate) {
+        this.valDate = valDate;
+    }
+
+    public String getValTime() {
+        return valTime;
+    }
+
+    public void setValTime(String valTime) {
+        this.valTime = valTime;
+    }
+
+    public String getValPriority() {
+        return valPriority;
+    }
+
+    public void setValPriority(String valPriority) {
+        this.valPriority = valPriority;
+    }
 }
