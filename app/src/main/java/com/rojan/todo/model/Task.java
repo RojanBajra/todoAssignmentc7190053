@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity()
+@Entity
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
