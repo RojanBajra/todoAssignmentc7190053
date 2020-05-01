@@ -101,6 +101,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
         //viewModel.init();
 
+        setupUI();
+
         addActionListeners();
     }
 
@@ -123,6 +125,19 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 btnAddTaskClick();
             }
         });
+    }
+
+    private void setupUI(){
+        lblTaskTitle.setText(viewModel.getLblValTitle());
+        lblDescription.setText(viewModel.getLblValDescription());
+        lblTaskDate.setText(viewModel.getLblValDate());
+        lblPriority.setText(viewModel.getLblValPriority());
+
+        lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblTitleColor()));
+        lblDescription.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDescriptionColor()));
+        lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
+        lblPriority.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblPriorityColor()));
+
     }
 
     private void showDatePicker(){
@@ -149,7 +164,11 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     }
 
     private void btnAddTaskClick(){
+        viewModel.setDefaultLabelText();
+        setDefaultText();
+
         changeTextColorToBlack();
+        viewModel.setDefaultLabelText();
         if(!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty() && !txtTaskTime.getText().toString().isEmpty()){
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
@@ -160,27 +179,53 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void checkEmptyTextField(){
         System.out.println("is this running");
-        setDefaultText();
 
-        checkingSingleTextField(txtTitle, lblTaskTitle, "Task Title (*required)");
-        checkingSingleTextField(txtDescription, lblDescription, "Task Description (*required)");
-        checkingSingleTextField(txtTaskDate, lblTaskDate, "Task Date (*required)");
-        txtTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
+
+        if(txtTitle.getText().toString().isEmpty()){
+            viewModel.setLblValTitle("Task Title (*required)");
+            viewModel.setLblTitleColor(R.color.colorRed);
+            lblTaskTitle.setText(viewModel.getLblValTitle());
+            lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblTitleColor()));
+        }
+
+        if(txtDescription.getText().toString().isEmpty()){
+            viewModel.setLblValDescription("Task Title (*required)");
+            viewModel.setLblDescriptionColor(R.color.colorRed);
+            lblDescription.setText(viewModel.getLblValDescription());
+            lblDescription.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDescriptionColor()));
+        }
+
+        if(txtTaskDate.getText().toString().isEmpty()){
+            viewModel.setLblValDate("Task Title (*required)");
+            viewModel.setLblDateColor(R.color.colorRed);
+            lblTaskDate.setText(viewModel.getLblValDate());
+            lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
+        }
+
+//        viewModel.setLblValDescription("Task Description (*required)");
+//        viewModel.setLblValDate("Task Date (*required)");
+////        viewModel.setLblValPriority("Task Title (*required)");
+//
+//        checkingSingleTextField(txtTitle, lblTaskTitle, viewModel.getLblValTitle());
+//        checkingSingleTextField(txtDescription, lblDescription, viewModel.getLblValDescription());
+//        checkingSingleTextField(txtTaskDate, lblTaskDate, viewModel.getLblValDate());
+//        txtTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
         // priority is left to do
     }
 
-    private void checkingSingleTextField(EditText editText, TextView textView, String message){
+    private void checkingSingleTextField(EditText editText, TextView textView){
         if (editText.getText().toString().isEmpty()){
-            textView.setText(message);
+            viewModel.setLblValTitle("Task Title (*required)");
+            textView.setText("");
             textView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
         }
     }
 
     private void setDefaultText(){
-        lblTaskTitle.setText("Task Title");
-        lblDescription.setText("Task Description");
-        lblTaskDate.setText("Task Date");
-        lblPriority.setText("Priority");
+        lblTaskTitle.setText(viewModel.getLblValTitle());
+        lblDescription.setText(viewModel.getLblValDescription());
+        lblTaskDate.setText(viewModel.getLblValDate());
+        lblPriority.setText(viewModel.getLblValPriority());
     }
 
     private void changeTextColorToBlack(){
