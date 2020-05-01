@@ -25,10 +25,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.AddTaskFragmentViewModel;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -173,9 +177,55 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             retrievePriorityValue();
             System.out.println("\n\n\n\n this is the value displayed \n\n\n");
             System.out.println(viewModel.toString());
+            saveIntoDatabase();
         } else {
             checkEmptyTextField();
         }
+    }
+
+    private void saveIntoDatabase(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+
+        Date date = new Date();
+        Date taskDate = new Date();
+        Date taskTime = new Date();
+
+        try {
+            date = format.parse(generateCurrentDate());
+            taskDate = format.parse(viewModel.getValDate());
+            taskTime = format.parse(viewModel.getValTime());
+        }catch (Exception e){
+
+        }
+
+        final Task task = new Task(
+                viewModel.getValTitle().toString(),
+                viewModel.getValDescription(),
+                taskDate,
+                taskTime,
+                false,
+                viewModel.getValPriority(),
+                date,
+                date
+        );
+
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(getActivity()).taskDao().insertTask(task);
+                System.out.println("THis shows that the db has been added");
+            }
+        });
+
+        getActivity().finish();
+    }
+
+    private String generateCurrentDate(){
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        return df.format(c);
     }
 
     private void checkEmptyTextField() {

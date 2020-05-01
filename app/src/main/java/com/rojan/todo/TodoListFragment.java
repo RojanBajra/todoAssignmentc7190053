@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,10 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rojan.todo.adapter.TodoListAdapter;
+import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.model.Task;
+
+import java.util.List;
 
 
 /**
@@ -34,6 +40,7 @@ public class TodoListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         init(view);
+        retrieveData();
 
         return view;
     }
@@ -52,6 +59,17 @@ public class TodoListFragment extends Fragment {
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
         TodoListAdapter adapter = new TodoListAdapter();
         listTodo.setAdapter(adapter);
+    }
+
+    private void retrieveData(){
+        LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
+        listOfTask.observe(getActivity(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                System.out.println("total number " + tasks.size());
+                System.out.println("task title " + tasks.get(0).getTaskName());
+            }
+        });
     }
 
     public void btnAddTask() {

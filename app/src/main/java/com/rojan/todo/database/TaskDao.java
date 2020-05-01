@@ -1,5 +1,6 @@
 package com.rojan.todo.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface TaskDao {
 
     @Query("select * from task order by priority")
-    List<Task> loadAllTheTask();
+    LiveData<List<Task>> loadAllTheTask();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTask(Task task);
