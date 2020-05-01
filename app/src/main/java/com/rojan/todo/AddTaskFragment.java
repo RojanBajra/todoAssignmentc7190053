@@ -41,15 +41,9 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private AddTaskFragmentViewModel viewModel;
 
-    public AddTaskFragment(){
+    public AddTaskFragment() {
 
     }
-
-//    public AddTaskFragment(Context context, Activity activity) {
-//        // Required empty public constructor
-//        this.context = context;
-//        this.activity = activity;
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,14 +51,13 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         init(view);
-        System.out.println("is this running oncreate");
         return view;
     }
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(i,i1,i2);
+        calendar.set(i, i1, i2);
         String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         txtTaskDate.setText(dateVal);
         viewModel.setValDate(i + "-" + (i1 + 1) + "-" + i2);
@@ -77,8 +70,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         viewModel.setValTime(i + ":" + i1);
     }
 
-    private void init(View view){
-        System.out.println("is this running init");
+    private void init(View view) {
         btnAddTask = view.findViewById(R.id.btnAddTask);
         txtTitle = view.findViewById(R.id.txtTitle);
         txtDescription = view.findViewById(R.id.txtDescription);
@@ -106,7 +98,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         addActionListeners();
     }
 
-    private void addActionListeners(){
+    private void addActionListeners() {
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +119,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         });
     }
 
-    private void setupUI(){
+    private void setupUI() {
         lblTaskTitle.setText(viewModel.getLblValTitle());
         lblDescription.setText(viewModel.getLblValDescription());
         lblTaskDate.setText(viewModel.getLblValDate());
@@ -140,7 +132,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     }
 
-    private void showDatePicker(){
+    private void showDatePicker() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 getActivity(),
                 this,
@@ -152,7 +144,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         datePickerDialog.show();
     }
 
-    private void showTimePicker(){
+    private void showTimePicker() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 this,
@@ -163,90 +155,49 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         timePickerDialog.show();
     }
 
-    private void btnAddTaskClick(){
+    private void btnAddTaskClick() {
         viewModel.setDefaultLabelText();
         setDefaultText();
 
-        changeTextColorToBlack();
         viewModel.setDefaultLabelText();
-        if(!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty() && !txtTaskTime.getText().toString().isEmpty()){
+        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty() && !txtTaskTime.getText().toString().isEmpty()) {
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
-        }else{
+        } else {
             checkEmptyTextField();
         }
     }
 
-    private void checkEmptyTextField(){
-        System.out.println("is this running");
+    private void checkEmptyTextField() {
 
-
-        if(txtTitle.getText().toString().isEmpty()){
+        if (txtTitle.getText().toString().isEmpty()) {
             viewModel.setLblValTitle("Task Title (*required)");
             viewModel.setLblTitleColor(R.color.colorRed);
             lblTaskTitle.setText(viewModel.getLblValTitle());
             lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblTitleColor()));
         }
 
-        if(txtDescription.getText().toString().isEmpty()){
+        if (txtDescription.getText().toString().isEmpty()) {
             viewModel.setLblValDescription("Task Title (*required)");
             viewModel.setLblDescriptionColor(R.color.colorRed);
             lblDescription.setText(viewModel.getLblValDescription());
             lblDescription.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDescriptionColor()));
         }
 
-        if(txtTaskDate.getText().toString().isEmpty()){
+        if (txtTaskDate.getText().toString().isEmpty()) {
             viewModel.setLblValDate("Task Title (*required)");
             viewModel.setLblDateColor(R.color.colorRed);
             lblTaskDate.setText(viewModel.getLblValDate());
             lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
         }
 
-//        viewModel.setLblValDescription("Task Description (*required)");
-//        viewModel.setLblValDate("Task Date (*required)");
-////        viewModel.setLblValPriority("Task Title (*required)");
-//
-//        checkingSingleTextField(txtTitle, lblTaskTitle, viewModel.getLblValTitle());
-//        checkingSingleTextField(txtDescription, lblDescription, viewModel.getLblValDescription());
-//        checkingSingleTextField(txtTaskDate, lblTaskDate, viewModel.getLblValDate());
-//        txtTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
-        // priority is left to do
     }
 
-    private void checkingSingleTextField(EditText editText, TextView textView){
-        if (editText.getText().toString().isEmpty()){
-            viewModel.setLblValTitle("Task Title (*required)");
-            textView.setText("");
-            textView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
-        }
-    }
-
-    private void setDefaultText(){
+    private void setDefaultText() {
         lblTaskTitle.setText(viewModel.getLblValTitle());
         lblDescription.setText(viewModel.getLblValDescription());
         lblTaskDate.setText(viewModel.getLblValDate());
         lblPriority.setText(viewModel.getLblValPriority());
     }
 
-    private void changeTextColorToBlack(){
-        lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
-        lblDescription.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
-        lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
-        lblPriority.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
-    }
-
 }
-
-// paste this in init
-//    MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-//        builder.setTitleText("Date picker");
-//                builder.setTheme(R.style.MyCalendarTheme);
-//final MaterialDatePicker materialDatePicker = builder.build();
-//
-//
-//        btnDatePicker.setOnClickListener(new View.OnClickListener() {
-//@Override
-//public void onClick(View view) {
-//        materialDatePicker.show(getFragmentManager(), "Date_Picker");
-//        }
-//        });
