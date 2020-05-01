@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -38,6 +39,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     private Button btnDatePicker, btnTimePicker, btnAddTask;
     private EditText txtTaskDate, txtTaskTime, txtTitle, txtDescription;
     private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority;
+    private RadioButton radioButtonHigh, radioButtonLow, radioButtonMedium;
 
     private AddTaskFragmentViewModel viewModel;
 
@@ -76,10 +78,13 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtDescription = view.findViewById(R.id.txtDescription);
 
         lblTaskTitle = view.findViewById(R.id.lblTaskTitle);
-        lblTaskTitle.setText("Task Title");
         lblDescription = view.findViewById(R.id.lblTaskDesription);
         lblTaskDate = view.findViewById(R.id.lblTaskDate);
         lblPriority = view.findViewById(R.id.lblPriority);
+
+        radioButtonHigh = view.findViewById(R.id.radioButtonHigh);
+        radioButtonLow = view.findViewById(R.id.radioButtonLow);
+        radioButtonMedium = view.findViewById(R.id.radioButtonMedium);
 
         // For date picker
         btnDatePicker = view.findViewById(R.id.btnDatePicker);
@@ -124,12 +129,14 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         lblDescription.setText(viewModel.getLblValDescription());
         lblTaskDate.setText(viewModel.getLblValDate());
         lblPriority.setText(viewModel.getLblValPriority());
+        setDefaultTextColor();
+    }
 
+    private void setDefaultTextColor(){
         lblTaskTitle.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblTitleColor()));
         lblDescription.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDescriptionColor()));
         lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
         lblPriority.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblPriorityColor()));
-
     }
 
     private void showDatePicker() {
@@ -160,9 +167,12 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         setDefaultText();
 
         viewModel.setDefaultLabelText();
-        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty() && !txtTaskTime.getText().toString().isEmpty()) {
+        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
+            retrievePriorityValue();
+            System.out.println("\n\n\n\n this is the value displayed \n\n\n");
+            System.out.println(viewModel.toString());
         } else {
             checkEmptyTextField();
         }
@@ -178,14 +188,14 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         }
 
         if (txtDescription.getText().toString().isEmpty()) {
-            viewModel.setLblValDescription("Task Title (*required)");
+            viewModel.setLblValDescription("Task Description (*required)");
             viewModel.setLblDescriptionColor(R.color.colorRed);
             lblDescription.setText(viewModel.getLblValDescription());
             lblDescription.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDescriptionColor()));
         }
 
         if (txtTaskDate.getText().toString().isEmpty()) {
-            viewModel.setLblValDate("Task Title (*required)");
+            viewModel.setLblValDate("Task Date (*required)");
             viewModel.setLblDateColor(R.color.colorRed);
             lblTaskDate.setText(viewModel.getLblValDate());
             lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
@@ -198,6 +208,17 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         lblDescription.setText(viewModel.getLblValDescription());
         lblTaskDate.setText(viewModel.getLblValDate());
         lblPriority.setText(viewModel.getLblValPriority());
+        setDefaultTextColor();
+    }
+
+    private void retrievePriorityValue(){
+        if (radioButtonHigh.isChecked()){
+            viewModel.setValPriority(0);
+        }else if (radioButtonMedium.isChecked()){
+            viewModel.setValPriority(1);
+        }else if (radioButtonLow.isChecked()){
+            viewModel.setValPriority(2);
+        }
     }
 
 }

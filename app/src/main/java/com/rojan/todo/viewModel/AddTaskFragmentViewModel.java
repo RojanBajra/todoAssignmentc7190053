@@ -1,14 +1,16 @@
 package com.rojan.todo.viewModel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.R;
 
 public class AddTaskFragmentViewModel extends ViewModel {
 
-    private String valTitle, valDescription, valDate, valTime, valPriority;
+    private String valTitle, valDescription, valDate, valTime;
     private String lblValTitle, lblValDescription, lblValDate, lblValPriority;
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
+    private int valPriority;
 
     public AddTaskFragmentViewModel(){
         super();
@@ -16,14 +18,14 @@ public class AddTaskFragmentViewModel extends ViewModel {
         valDescription = "";
         valDate = "";
         valTime = "";
-        valPriority = "";
+        valPriority = 0;
         setDefaultLabelText();
     }
 
     public void setDefaultLabelText(){
         lblValTitle = "Task Title";
         lblValDescription = "Task Description";
-        lblValDate = "Task Date (optional)";
+        lblValDate = "Task Date";
         lblValPriority = "Task Priority";
 
         lblTitleColor = R.color.colorBlack;
@@ -31,6 +33,12 @@ public class AddTaskFragmentViewModel extends ViewModel {
         lblDateColor = R.color.colorBlack;
         lblPriorityColor = R.color.colorBlack;
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Title: " + valTitle + "\nDescription: " + valDescription + "\nDate: " + valDate + "\nTime: " + valTime + "\nPriority" + valPriority;
     }
 
     public int getLblTitleColor() {
@@ -129,11 +137,11 @@ public class AddTaskFragmentViewModel extends ViewModel {
         this.valTime = valTime;
     }
 
-    public String getValPriority() {
+    public int getValPriority() {
         return valPriority;
     }
 
-    public void setValPriority(String valPriority) {
+    public void setValPriority(int valPriority) {
         this.valPriority = valPriority;
     }
 }

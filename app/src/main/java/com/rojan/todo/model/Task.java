@@ -16,6 +16,7 @@ public class Task {
     private Date taskDate;
     private Date taskTime;
     private boolean isCompleted;
+    // high = 0, medium = 1, low = 2
     private int priority;
     private Date createdOn;
     private Date updatedOn;
