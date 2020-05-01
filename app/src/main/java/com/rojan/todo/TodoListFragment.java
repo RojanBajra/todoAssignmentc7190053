@@ -66,8 +66,6 @@ public class TodoListFragment extends Fragment {
         listOfTask.observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                System.out.println("total number " + tasks.size());
-                System.out.println("task title " + tasks.get(0).getTaskName());
             }
         });
     }

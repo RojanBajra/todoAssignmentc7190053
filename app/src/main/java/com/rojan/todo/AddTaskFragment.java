@@ -175,8 +175,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
             retrievePriorityValue();
-            System.out.println("\n\n\n\n this is the value displayed \n\n\n");
-            System.out.println(viewModel.toString());
             saveIntoDatabase();
         } else {
             checkEmptyTextField();
@@ -213,7 +211,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             @Override
             public void run() {
                 AppDatabase.getInstance(getActivity()).taskDao().insertTask(task);
-                System.out.println("THis shows that the db has been added");
             }
         });
 
