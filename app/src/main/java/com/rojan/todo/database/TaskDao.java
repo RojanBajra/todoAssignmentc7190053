@@ -26,4 +26,7 @@ public interface TaskDao {
 
     @Delete
     void deleteTask(Task task);
+
+    @Query("select count(*) from task")
+    LiveData<Integer> loadTotalTask();
 }

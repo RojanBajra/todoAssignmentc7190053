@@ -29,6 +29,7 @@ public class TodoListFragment extends Fragment {
 
     private RecyclerView listTodo;
     private FloatingActionButton floatingActionButton;
+    private TodoListAdapter adapter;
 
     public TodoListFragment(){
 
@@ -57,7 +58,7 @@ public class TodoListFragment extends Fragment {
         });
 
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        TodoListAdapter adapter = new TodoListAdapter();
+        adapter = new TodoListAdapter();
         listTodo.setAdapter(adapter);
     }
 
@@ -66,6 +67,17 @@ public class TodoListFragment extends Fragment {
         listOfTask.observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
+                adapter.setData(tasks);
+            }
+        });
+    }
+
+    private void retrieveTotalTask(){
+        LiveData<Integer> totalTask = AppDatabase.getInstance(getActivity()).taskDao().loadTotalTask();
+        totalTask.observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+
             }
         });
     }
