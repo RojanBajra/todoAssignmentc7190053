@@ -1,14 +1,17 @@
 package com.rojan.todo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +21,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rojan.todo.adapter.TodoListAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
+import com.rojan.todo.viewModel.TodoListAdapterViewModel;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodoListFragment extends Fragment {
+public class TodoListFragment extends Fragment implements TodoListAdapter.OnTaskClickListener {
 
     private RecyclerView listTodo;
     private FloatingActionButton floatingActionButton;
@@ -46,6 +53,12 @@ public class TodoListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onTaskClicked(int position) {
+        Intent intent = SingleTask.makeIntent(getActivity(), position);
+        startActivity(intent);
+    }
+
     private void init(View view){
         listTodo = (RecyclerView) view.findViewById(R.id.listTodo);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabAddTask);
@@ -58,26 +71,18 @@ public class TodoListFragment extends Fragment {
         });
 
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new TodoListAdapter(getActivity());
+        adapter = new TodoListAdapter(getActivity(), this);
         listTodo.setAdapter(adapter);
+
     }
 
     private void retrieveData(){
-        LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
+        final LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
         listOfTask.observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
+                System.out.println("first ma running");
                 adapter.setData(tasks);
-            }
-        });
-    }
-
-    private void retrieveTotalTask(){
-        LiveData<Integer> totalTask = AppDatabase.getInstance(getActivity()).taskDao().loadTotalTask();
-        totalTask.observe(getActivity(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-
             }
         });
     }
@@ -85,4 +90,6 @@ public class TodoListFragment extends Fragment {
     public void btnAddTask() {
         startActivity(AddTask.makeIntent(getActivity()));
     }
+
+
 }

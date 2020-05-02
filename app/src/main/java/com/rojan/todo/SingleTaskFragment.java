@@ -8,16 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rojan.todo.model.Task;
+import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SingleTaskFragment extends Fragment {
 
+    private SingleTaskFragmentViewModel viewModel;
+
     public SingleTaskFragment() {
         // Required empty public constructor
     }
 
+    public SingleTaskFragment(Task task){
+        this.viewModel.setTask(task);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

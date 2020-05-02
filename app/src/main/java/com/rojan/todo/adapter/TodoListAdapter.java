@@ -33,6 +33,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //    List<Task> listOfData;
     TodoListAdapterViewModel viewModel;
     Context context;
+    OnTaskClickListener onTaskClickListener;
 
     public void setData(List<Task> listOfData) {
 //        this.listOfData = listOfData;
@@ -40,9 +41,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public TodoListAdapter(Context context) {
+    public TodoListAdapter(Context context, OnTaskClickListener onTaskClickListener) {
         this.context = context;
         viewModel = ViewModelProviders.of((FragmentActivity) context).get(TodoListAdapterViewModel.class);
+        this.onTaskClickListener = onTaskClickListener;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todo_list, parent, false);
-                holder = new TodoListViewHolder(view);
+                holder = new TodoListViewHolder(view, onTaskClickListener);
                 break;
         }
         return holder;
@@ -158,14 +160,15 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return dateVal;
     }
 
-    public class TodoListViewHolder extends RecyclerView.ViewHolder {
+    public class TodoListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView lblTitle;
-        TextView lblDescription;
-        TextView lblDueDate;
-        ConstraintLayout container;
+        private TextView lblTitle;
+        private TextView lblDescription;
+        private TextView lblDueDate;
+        private ConstraintLayout container;
+        private OnTaskClickListener onTaskClickListener;
 
-        public TodoListViewHolder(@NonNull View itemView) {
+        public TodoListViewHolder(@NonNull View itemView, OnTaskClickListener onTaskClickListener) {
             super(itemView);
 
             // initializing the variables
@@ -173,13 +176,23 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             lblDescription = (TextView) itemView.findViewById(R.id.lblDescription);
             lblDueDate = (TextView) itemView.findViewById(R.id.lblDueDate);
             container = (ConstraintLayout) itemView.findViewById(R.id.constraintContainer);
+
+            this.onTaskClickListener = onTaskClickListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            System.out.println("yeta chahi chiryo");
+            onTaskClickListener.onTaskClicked(getAdapterPosition());
         }
 
     }
 
-    public class StatViewHolder extends RecyclerView.ViewHolder {
+    public class StatViewHolder extends RecyclerView.ViewHolder{
 
-        TextView lblToday, lblAll;
+        private TextView lblToday, lblAll;
+
 
         public StatViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -187,5 +200,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             lblToday = (TextView) itemView.findViewById(R.id.lblToday);
             lblAll = (TextView) itemView.findViewById(R.id.lblAll);
         }
+
+    }
+
+    public interface OnTaskClickListener{
+        public void onTaskClicked(int position);
     }
 }

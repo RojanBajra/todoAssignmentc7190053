@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.model.Task;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TodoListAdapterViewModel extends ViewModel {
+public class TodoListAdapterViewModel extends ViewModel implements Serializable {
 
     List<Task> listOfData;
 
