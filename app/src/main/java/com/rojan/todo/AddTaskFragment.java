@@ -188,7 +188,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void saveIntoDatabase(){
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
-
         Date date = new Date();
 
         try {
