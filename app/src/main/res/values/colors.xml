@@ -8,5 +8,6 @@
     <color name="colorRed">#ff0000</color>
     <color name="colorOrange">#ffa500</color>
     <color name="colorYellow">#ffff00</color>
+    <color name="colorYellowForText">#dddd00</color>
     <color name="colorTransparent">#00000000</color>
 </resources>

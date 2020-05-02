@@ -1,12 +1,18 @@
 package com.rojan.todo.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -84,6 +90,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((TodoListViewHolder) holder).lblTitle.setText(viewModel.getListOfData().get(position - 1).getTaskName());
             ((TodoListViewHolder) holder).lblDescription.setText(viewModel.getListOfData().get(position - 1).getTaskDescription());
             ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + dateConverter(viewModel.getListOfData().get(position - 1).getTaskDate(), "MM-dd-yyyy"));
+//            ((TodoListViewHolder) holder).lblTitle.setTextColor(ContextCompat.getColor(context, settingColor(position - 1)));
+            ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
         } else if (holder instanceof StatViewHolder) {
 //            ((StatViewHolder)holder).lblToday.setText("1000");
             ((StatViewHolder) holder).lblToday.setText(generateTotalToday());
@@ -95,6 +103,31 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return viewModel.getListOfData().size() + 1;
+    }
+
+    private Drawable settingBackground(int position){
+        Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.list_border_background);
+        Drawable drawable1 = DrawableCompat.wrap(drawable);
+        if (viewModel.getListOfData().get(position).getPriority() == 0){
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorRed));
+            return drawable1;
+        }else if (viewModel.getListOfData().get(position).getPriority() == 1){
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorOrange));
+            return drawable1;
+        }else {
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorYellowForText));
+            return drawable1;
+        }
+    }
+
+    private int settingColor(int position){
+        if (viewModel.getListOfData().get(position).getPriority() == 0){
+            return R.color.colorRed;
+        }else if (viewModel.getListOfData().get(position).getPriority() == 1){
+            return R.color.colorOrange;
+        }else {
+            return R.color.colorYellow;
+        }
     }
 
     private String generateTotalToday() {
@@ -127,7 +160,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class TodoListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView lblTitle, lblDescription, lblDueDate;
+        TextView lblTitle;
+        TextView lblDescription;
+        TextView lblDueDate;
+        ConstraintLayout container;
 
         public TodoListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -136,6 +172,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             lblTitle = (TextView) itemView.findViewById(R.id.lblTitle);
             lblDescription = (TextView) itemView.findViewById(R.id.lblDescription);
             lblDueDate = (TextView) itemView.findViewById(R.id.lblDueDate);
+            container = (ConstraintLayout) itemView.findViewById(R.id.constraintContainer);
         }
 
     }
