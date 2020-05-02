@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="4dp"
     android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="4dp"
     android:background="@drawable/list_border_background"
     android:padding="8dp">
 
@@ -28,7 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description of the text"
+        android:ems="3"
+        android:ellipsize="end"
         android:textColor="@color/colorBlack"
+        android:maxLines="2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lblTitle" />
