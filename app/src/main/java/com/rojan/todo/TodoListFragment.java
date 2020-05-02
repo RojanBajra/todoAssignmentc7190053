@@ -58,7 +58,7 @@ public class TodoListFragment extends Fragment {
         });
 
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new TodoListAdapter();
+        adapter = new TodoListAdapter(getActivity());
         listTodo.setAdapter(adapter);
     }
 
