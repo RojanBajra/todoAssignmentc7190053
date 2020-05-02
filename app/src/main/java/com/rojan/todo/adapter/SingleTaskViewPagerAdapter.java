@@ -22,7 +22,6 @@ public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
 
     public void setData(List<Task> task){
         viewModel.setListOfTask(task);
-        System.out.println("yeta setdata");
         notifyDataSetChanged();
     }
 
@@ -35,13 +34,14 @@ public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        SingleTaskFragment fragment = new SingleTaskFragment();
+
+        SingleTaskFragment fragment = new SingleTaskFragment(position);
+
         return fragment;
     }
 
     @Override
     public int getCount() {
-        int count = viewModel.getListOfTask() == null ? 0 : viewModel.getListOfTask().size();
-        return count;
+        return viewModel.getListOfTask() == null ? 0 : viewModel.getListOfTask().size();
     }
 }

@@ -42,9 +42,8 @@ public class SingleTask extends AppCompatActivity {
 
         viewPagerSingleTask = (ViewPager) findViewById(R.id.viewPagerSingleTask);
         adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager(), this);
-
         viewPagerSingleTask.setAdapter(adapter);
-        System.out.println("is it entering");
+
         retrieveData();
 
     }
@@ -52,17 +51,11 @@ public class SingleTask extends AppCompatActivity {
     private void retrieveData(){
 
         LiveData<List<Task>> listOfTask = AppDatabase.getInstance(this).taskDao().loadAllTheTask();
-        System.out.println("retrive data call vaira");
-        adapter.setData(listOfTask.getValue());
 
         listOfTask.observe(this, new Observer<List<Task>>() {
-
             @Override
             public void onChanged(List<Task> tasks) {
-
-                System.out.println("yo call vaira cah?");
                 adapter.setData(tasks);
-                System.out.println("yo end vaira cha ?");
             }
         });
     }
