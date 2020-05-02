@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.R;
 
+import java.util.Date;
+
 public class AddTaskFragmentViewModel extends ViewModel {
 
-    private String valTitle, valDescription, valDate, valTime;
+    private String valTitle, valDescription;
+    private Date valDate, valTime;
     private String lblValTitle, lblValDescription, lblValDate, lblValPriority;
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
@@ -16,8 +19,8 @@ public class AddTaskFragmentViewModel extends ViewModel {
         super();
         valTitle = "";
         valDescription = "";
-        valDate = "";
-        valTime = "";
+        valDate = new Date();
+        valTime = new Date();
         valPriority = 0;
         setDefaultLabelText();
     }
@@ -121,19 +124,19 @@ public class AddTaskFragmentViewModel extends ViewModel {
         this.valDescription = valDescription;
     }
 
-    public String getValDate() {
+    public Date getValDate() {
         return valDate;
     }
 
-    public void setValDate(String valDate) {
+    public void setValDate(Date valDate) {
         this.valDate = valDate;
     }
 
-    public String getValTime() {
+    public Date getValTime() {
         return valTime;
     }
 
-    public void setValTime(String valTime) {
+    public void setValTime(Date valTime) {
         this.valTime = valTime;
     }
 

@@ -66,14 +66,19 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         calendar.set(i, i1, i2);
         String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         txtTaskDate.setText(dateVal);
-        viewModel.setValDate(i + "-" + (i1 + 1) + "-" + i2);
+//        viewModel.setValDate(i + "-" + (i1 + 1) + "-" + i2);
+        viewModel.setValDate((calendar.getTime()));
     }
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(i, i1);
+        String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         String timeVal = i + ":" + i1;
         txtTaskTime.setText(timeVal);
-        viewModel.setValTime(i + ":" + i1);
+        viewModel.setValTime(calendar.getTime());
+//        viewModel.setValTime(i + ":" + i1);
     }
 
     private void init(View view) {
@@ -182,7 +187,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     }
 
     private void saveIntoDatabase(){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 
         Date date = new Date();
         Date taskDate = new Date();
@@ -190,8 +195,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
         try {
             date = format.parse(generateCurrentDate());
-            taskDate = format.parse(viewModel.getValDate());
-            taskTime = format.parse(viewModel.getValTime());
         }catch (Exception e){
 
         }
@@ -199,8 +202,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         final Task task = new Task(
                 viewModel.getValTitle().toString(),
                 viewModel.getValDescription(),
-                taskDate,
-                taskTime,
+                viewModel.getValDate(),
+                viewModel.getValTime(),
                 false,
                 viewModel.getValPriority(),
                 date,
@@ -221,7 +224,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         return df.format(c);
     }
 

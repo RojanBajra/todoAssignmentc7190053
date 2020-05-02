@@ -12,6 +12,7 @@ import com.rojan.todo.R;
 import com.rojan.todo.model.Task;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -66,11 +67,12 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //            ((TodoListViewHolder)holder).lblDescription.setText("description of the text will be shown here.");
 //            ((TodoListViewHolder)holder).lblDueDate.setText("Due Date is here.");
 
-            ((TodoListViewHolder)holder).lblTitle.setText(listOfData.get(position).getTaskName());
-            ((TodoListViewHolder)holder).lblDescription.setText(listOfData.get(position).getTaskDescription());
-            ((TodoListViewHolder)holder).lblDueDate.setText("Due date: " + dateConverter(listOfData.get(position).getTaskDate()));
+            ((TodoListViewHolder)holder).lblTitle.setText(listOfData.get(position - 1).getTaskName());
+            ((TodoListViewHolder)holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
+            ((TodoListViewHolder)holder).lblDueDate.setText("Due date: " + dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
         }else if(holder instanceof StatViewHolder) {
-            ((StatViewHolder)holder).lblToday.setText("1000");
+//            ((StatViewHolder)holder).lblToday.setText("1000");
+            ((StatViewHolder)holder).lblToday.setText(generateTotalToday());
             ((StatViewHolder)holder).lblAll.setText(Integer.toString(listOfData.size()));
         }
 
@@ -78,11 +80,34 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return listOfData.size();
+//        System.out.println("Name is " + listOfData.get(0).getTaskName() + " and id is " + listOfData.get(0).getTaskId());
+//        System.out.println("Name is " + listOfData.get(1).getTaskName() + " and id is " + listOfData.get(1).getTaskId());
+//        System.out.println("Name is " + listOfData.get(2).getTaskName() + " and id is " + listOfData.get(2).getTaskId());
+        return listOfData.size() + 1;
     }
 
-    private String dateConverter(Date date){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private String generateTotalToday(){
+        int counter = 0;
+        for (Task singleTask: listOfData) {
+            System.out.println("\n Checking it:\n name " + singleTask.getTaskName() + " \ncureent date " + generateCurrentDate() + "\n date in task " + dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy") + "\n\n");
+            if (generateCurrentDate().equals(dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy"))){
+                counter++;
+            }
+        }
+        return "" + counter;
+    }
+
+    private String generateCurrentDate(){
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        return df.format(c);
+    }
+
+    private String dateConverter(Date date, String datePattern){
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
         String dateVal = "";
         try {
             dateVal = dateFormat.format(date);
