@@ -190,8 +190,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 
         Date date = new Date();
-        Date taskDate = new Date();
-        Date taskTime = new Date();
 
         try {
             date = format.parse(generateCurrentDate());
