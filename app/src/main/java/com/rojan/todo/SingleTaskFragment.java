@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
@@ -79,6 +80,7 @@ public class SingleTaskFragment extends Fragment {
         lblUpdatedOn = (TextView) view.findViewById(R.id.lblUpdatedOn);
         lblCompleted = (TextView) view.findViewById(R.id.lblCompleted);
         btnEdit = (Button) view.findViewById(R.id.btnEdit);
+        btnDelete = (Button) view.findViewById(R.id.btnDelete);
 //        checkBoxCompleted.setClickable(false);
         addActionListeners();
     }
@@ -100,6 +102,19 @@ public class SingleTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 System.out.println("the name of is " + taskData.getTaskName());
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
+                        getActivity().finish();
+                    }
+                });
             }
         });
     }
