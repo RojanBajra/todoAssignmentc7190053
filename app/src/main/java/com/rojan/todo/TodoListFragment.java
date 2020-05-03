@@ -78,6 +78,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
 
     private void retrieveData(){
         final LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
+
         listOfTask.observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {

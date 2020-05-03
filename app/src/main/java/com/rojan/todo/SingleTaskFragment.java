@@ -75,6 +75,7 @@ public class SingleTaskFragment extends Fragment {
         lblCreatedOn = (TextView) view.findViewById(R.id.lblCreatedOn);
         lblUpdatedOn = (TextView) view.findViewById(R.id.lblUpdatedOn);
         checkBoxCompleted = (CheckBox) view.findViewById(R.id.checkBoxCompleted);
+        checkBoxCompleted.setClickable(false);
     }
 
     private void setValues(){

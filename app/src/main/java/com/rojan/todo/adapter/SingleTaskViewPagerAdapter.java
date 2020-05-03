@@ -36,7 +36,6 @@ public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         System.out.println("fragment creation");
         SingleTaskFragment fragment = (SingleTaskFragment) SingleTaskFragment.getInstance(viewModel.getListOfTask().get(position));
-
         return fragment;
     }
 
