@@ -70,6 +70,7 @@ public class SingleTask extends AppCompatActivity {
             public void onChanged(List<Task> tasks) {
                 adapter.setData(tasks);
                 viewPagerSingleTask.setCurrentItem(viewModel.getPosition());
+                viewPagerSingleTask.setOffscreenPageLimit(viewModel.getListOfTask().getValue().size());
             }
         });
     }

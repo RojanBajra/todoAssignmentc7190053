@@ -10,4 +10,5 @@
     <color name="colorYellow">#ffff00</color>
     <color name="colorYellowForText">#dddd00</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorGreen">#008A06</color>
 </resources>
