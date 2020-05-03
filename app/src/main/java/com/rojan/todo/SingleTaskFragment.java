@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,11 +39,6 @@ public class SingleTaskFragment extends Fragment {
 
     public SingleTaskFragment() {
         // Required empty public constructor
-    }
-
-    public SingleTaskFragment(int position, Task task){
-        viewModel.setPosition(position);
-        viewModel.setTask(task);
     }
 
     @Override
@@ -84,11 +80,12 @@ public class SingleTaskFragment extends Fragment {
     private void setValues(){
         lblTitle.setText(viewModel.getTask().getTaskName());
         lblDescription.setText(viewModel.getTask().getTaskDescription());
-        lblDate.setText(dateConverter(viewModel.getTask().getTaskDate(), "MM-dd-yyyy"));
+//        lblDate.setText(dateConverter(viewModel.getTask().getTaskDate(), "MM-dd-yyyy"));
+        lblDate.setText((DateFormat.getDateInstance(DateFormat.FULL).format(viewModel.getTask().getTaskDate())));
         lblTime.setText(dateConverter(viewModel.getTask().getTaskTime(), "HH:MM"));
         lblPriority.setText(getPriorityValue(viewModel.getTask().getPriority()));
-        lblCreatedOn.setText(dateConverter(viewModel.getTask().getCreatedOn(), "MM-dd-yyyy"));
-        lblUpdatedOn.setText(dateConverter(viewModel.getTask().getUpdatedOn(), "MM-dd-yyyy"));
+        lblCreatedOn.setText("Created on: " + dateConverter(viewModel.getTask().getCreatedOn(), "MM-dd-yyyy"));
+        lblUpdatedOn.setText("Updated on: " + dateConverter(viewModel.getTask().getUpdatedOn(), "MM-dd-yyyy"));
         checkBoxCompleted.setChecked(viewModel.getTask().isCompleted());
     }
 
