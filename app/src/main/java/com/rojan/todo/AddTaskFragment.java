@@ -74,10 +74,13 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(i, i1);
+        Date c = Calendar.getInstance().getTime();
+        calendar.set(c.getYear(), c.getMonth(), c.getDate(), i, i1);
         String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         String timeVal = i + ":" + i1;
         txtTaskTime.setText(timeVal);
         viewModel.setValTime(calendar.getTime());
+        System.out.println("time yeta aaira cha " + calendar.getTime());
 //        viewModel.setValTime(i + ":" + i1);
     }
 
