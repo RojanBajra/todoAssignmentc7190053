@@ -22,6 +22,7 @@ import com.rojan.todo.adapter.TodoListAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.TodoListAdapterViewModel;
+import com.rojan.todo.viewModel.TodoListFragmentViewModel;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -37,6 +38,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     private RecyclerView listTodo;
     private FloatingActionButton floatingActionButton;
     private TodoListAdapter adapter;
+    private TodoListFragmentViewModel viewModel;
 
     public TodoListFragment(){
 
@@ -77,9 +79,9 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     }
 
     private void retrieveData(){
-        final LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
-
-        listOfTask.observe(getActivity(), new Observer<List<Task>>() {
+//        final LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
+        viewModel.setListOfTask(AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask());
+        viewModel.getListOfTask().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
                 System.out.println("first ma running");
