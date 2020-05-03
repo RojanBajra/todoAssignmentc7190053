@@ -57,7 +57,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
 
     @Override
     public void onTaskClicked(int position) {
-        Intent intent = SingleTask.makeIntent(getActivity(), position);
+        Intent intent = SingleTask.makeIntent(getActivity(), position - 1);
         startActivity(intent);
     }
 
@@ -76,6 +76,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         adapter = new TodoListAdapter(getActivity(), this);
         listTodo.setAdapter(adapter);
 
+        viewModel = ViewModelProviders.of(getActivity()).get(TodoListFragmentViewModel.class);
     }
 
     private void retrieveData(){
@@ -84,7 +85,6 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         viewModel.getListOfTask().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                System.out.println("first ma running");
                 adapter.setData(tasks);
             }
         });
