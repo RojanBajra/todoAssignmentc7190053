@@ -101,20 +101,27 @@ public class SingleTaskFragment extends Fragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("the name of is " + taskData.getTaskName());
+                btnEditClicked();
             }
         });
-
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppDatabase.databaseWriteExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
-                        getActivity().finish();
-                    }
-                });
+                btnDeleteClicked();
+            }
+        });
+    }
+
+    private void btnEditClicked(){
+
+    }
+
+    private void btnDeleteClicked(){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
+                getActivity().finish();
             }
         });
     }
