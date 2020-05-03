@@ -43,7 +43,7 @@ public class SingleTask extends AppCompatActivity {
         viewPagerSingleTask = (ViewPager) findViewById(R.id.viewPagerSingleTask);
         adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerSingleTask.setAdapter(adapter);
-
+        viewPagerSingleTask.setCurrentItem();
         retrieveData();
 
     }
