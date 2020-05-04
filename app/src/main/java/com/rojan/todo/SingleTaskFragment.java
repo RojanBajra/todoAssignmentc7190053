@@ -121,7 +121,7 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void btnEditClicked() {
-
+        startActivity(AddTask.makeIntent(getActivity(), taskData.getTaskId()));
     }
 
     private void btnDeleteClicked() {

@@ -1,6 +1,7 @@
 package com.rojan.todo;
 
 import android.app.Activity;
+import android.app.AppComponentFactory;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,6 +32,7 @@ import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.AddTaskFragmentViewModel;
+import com.rojan.todo.viewModelFactory.AddTaskFragmentViewModelFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,8 +63,17 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         return fragment;
     }
 
-    public AddTaskFragment() {
+    public AddTaskFragment(){
 
+    }
+
+    public AddTaskFragment(int taskId) {
+//        if(taskId == -1){
+//            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
+//        }else {
+//
+//        }
+        this.taskId = taskId;
     }
 
     @Override
@@ -128,12 +140,32 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtTaskTime = view.findViewById(R.id.txtTaskTime);
 
         // view model
-        viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
+        if (taskId == -1){
+            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
+            viewModel.setTaskId(taskId);
+        }else{
+            AddTaskFragmentViewModelFactory factory = new AddTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
+            viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
+            viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
+                @Override
+                public void onChanged(Task task) {
+                    setEditableData(task);
+                }
+            });
+        }
+
         //viewModel.init();
 
         setDefaultText();
 
         addActionListeners();
+    }
+
+    private void setEditableData(Task task){
+        txtTitle.setText(task.getTaskName());
+        txtDescription.setText(task.getTaskDescription());
+        txtTaskDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(task.getTaskDate()));
+        txtTaskTime.setText(task.getTaskTime().getHours() + ":" + task.getTaskTime().getMinutes());
     }
 
     private void addActionListeners() {

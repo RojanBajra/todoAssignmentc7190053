@@ -1,14 +1,14 @@
 package com.rojan.todo.viewModel;
 
 import android.app.Application;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.rojan.todo.R;
+import com.rojan.todo.TodoList;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Task;
@@ -16,6 +16,7 @@ import com.rojan.todo.utils.DateFormatUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AddTaskFragmentViewModel extends AndroidViewModel {
 
@@ -25,19 +26,40 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
     private Repository repository;
+    private LiveData<Task> taskToEdit;
+    private int taskId;
+
+    public AddTaskFragmentViewModel(@NonNull Application application, int taskId) {
+        super(application);
+        this.taskId = taskId;
+
+        AppDatabase database = AppDatabase.getInstance(application);
+        repository = new Repository(database);
+
+        taskToEdit = repository.loadTaskById(taskId);
+        LiveData<List<Task>> d = repository.loadAllTask();
+//        System.out.println("yo chchi aaira cha ni " + d.getValue().get(0).getTaskName());
+//        System.out.println("data aako yo ho " + taskToEdit.getValue().getTaskId() + " name " + taskToEdit.getValue().getTaskName());
+        init();
+        setDefaultLabelText();
+    }
 
     public AddTaskFragmentViewModel(@NonNull Application application) {
         super(application);
 
-        AppDatabase database = AppDatabase.getInstance(getApplication());
+        AppDatabase database = AppDatabase.getInstance(application);
         repository = new Repository(database);
 
+        init();
+        setDefaultLabelText();
+    }
+
+    private void init(){
         valTitle = "";
         valDescription = "";
         valDate = new Date();
         valTime = new Date();
         valPriority = 0;
-        setDefaultLabelText();
     }
 
     public void setDefaultLabelText(){
@@ -50,7 +72,6 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         lblDescriptionColor = R.color.colorBlack;
         lblDateColor = R.color.colorBlack;
         lblPriorityColor = R.color.colorBlack;
-
     }
 
     public void saveIntoDatabase(){
@@ -97,6 +118,22 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     @Override
     public String toString() {
         return "Title: " + valTitle + "\nDescription: " + valDescription + "\nDate: " + valDate + "\nTime: " + valTime + "\nPriority" + valPriority;
+    }
+
+    public LiveData<Task> getTaskToEdit() {
+        return taskToEdit;
+    }
+
+    public void setTaskToEdit(LiveData<Task> taskToEdit) {
+        this.taskToEdit = taskToEdit;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     public int getLblTitleColor() {
