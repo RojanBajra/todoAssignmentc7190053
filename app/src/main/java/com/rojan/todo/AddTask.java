@@ -19,10 +19,9 @@ public class AddTask extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent makeIntent(Context context, int id, String yoyo){
+    public static Intent makeIntent(Context context, int id){
         Intent intent = new Intent(context, AddTask.class);
         intent.putExtra(TASK_ID, id);
-        intent.putExtra("yoyo", yoyo);
         return intent;
     }
 
@@ -35,20 +34,17 @@ public class AddTask extends AppCompatActivity {
         taskId = getIntent().getIntExtra(TASK_ID, DEFAULT_TASK_ID);
         if(taskId != DEFAULT_TASK_ID){
             System.out.println("This is printing " + taskId);
-            String ff = getIntent().getStringExtra("yoyo");
-            System.out.println("this is printing adaing " + ff);
+        }else{
+            if (savedInstanceState == null){
+                loadFragment();
+            }
         }
-        if (savedInstanceState == null){
-            loadFragment();
-        }
+
     }
 
     private void loadFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment addTaskFragment = new AddTaskFragment();
         fragmentManager.beginTransaction().add(R.id.frameContainer, addTaskFragment).commit();
-
-//        viewModel.fragment = new AddTaskFragment();
-//        fragmentManager.beginTransaction().add(R.id.frameContainer, viewModel.fragment).commit();
     }
 }

@@ -52,7 +52,6 @@ public class SingleTaskFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("first");
         Bundle args = getArguments();
         if (args != null) {
             taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);

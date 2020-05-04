@@ -40,15 +40,34 @@ import java.util.Date;
  */
 public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    public static String EDIT_PAGE_KEY = "editPage";
     private Button btnDatePicker, btnTimePicker, btnAddTask;
     private EditText txtTaskDate, txtTaskTime, txtTitle, txtDescription;
     private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority;
     private RadioButton radioButtonHigh, radioButtonLow, radioButtonMedium;
 
     private AddTaskFragmentViewModel viewModel;
+    private int taskId;
+
+    public static Fragment getInstance(int taskId){
+        Bundle args = new Bundle();
+        args.putInt(EDIT_PAGE_KEY, taskId);
+        AddTaskFragment fragment = new AddTaskFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public AddTaskFragment() {
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle args = getArguments();
+        if (args != null) {
+            taskId = args.getInt(EDIT_PAGE_KEY);
+        }
     }
 
     @Override
@@ -66,6 +85,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         calendar.set(i, i1, i2);
         String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         txtTaskDate.setText(dateVal);
+        System.out.println("this part is providing date");
 //        viewModel.setValDate(i + "-" + (i1 + 1) + "-" + i2);
         viewModel.setValDate((calendar.getTime()));
     }
@@ -134,6 +154,22 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 btnAddTaskClick();
             }
         });
+
+    }
+
+    private void btnAddTaskClick() {
+        viewModel.setDefaultLabelText();
+        setDefaultText();
+
+        viewModel.setDefaultLabelText();
+        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
+            viewModel.setValTitle(txtTitle.getText().toString());
+            viewModel.setValDescription(txtDescription.getText().toString());
+            retrievePriorityValue();
+            saveIntoDatabase();
+        } else {
+            checkEmptyTextField();
+        }
     }
 
     private void setupUI() {
@@ -174,20 +210,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         timePickerDialog.show();
     }
 
-    private void btnAddTaskClick() {
-        viewModel.setDefaultLabelText();
-        setDefaultText();
 
-        viewModel.setDefaultLabelText();
-        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
-            viewModel.setValTitle(txtTitle.getText().toString());
-            viewModel.setValDescription(txtDescription.getText().toString());
-            retrievePriorityValue();
-            saveIntoDatabase();
-        } else {
-            checkEmptyTextField();
-        }
-    }
 
     private void saveIntoDatabase(){
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
