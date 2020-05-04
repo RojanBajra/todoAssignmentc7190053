@@ -1,32 +1,23 @@
 package com.rojan.todo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rojan.todo.adapter.TodoListAdapter;
-import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
-import com.rojan.todo.viewModel.TodoListAdapterViewModel;
 import com.rojan.todo.viewModel.TodoListFragmentViewModel;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,15 +41,12 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         init(view);
-        retrieveData();
-
         return view;
     }
 
     @Override
     public void onTaskClicked(int position) {
-        Intent intent = SingleTask.makeIntent(getActivity(), position - 1);
-        startActivity(intent);
+        startActivity(SingleTask.makeIntent(getActivity(), position - 1));
     }
 
     private void init(View view){
@@ -77,11 +65,10 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         listTodo.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(getActivity()).get(TodoListFragmentViewModel.class);
+        retrieveTasks();
     }
 
-    private void retrieveData(){
-//        final LiveData<List<Task>> listOfTask = AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask();
-        viewModel.setListOfTask(AppDatabase.getInstance(getActivity()).taskDao().loadAllTheTask());
+    private void retrieveTasks(){
         viewModel.getListOfTask().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
