@@ -36,17 +36,14 @@ import java.util.List;
 public class SingleTaskFragment extends Fragment {
 
     private static String SERIALIZABLE_VALUE = "getTask";
-    private static String TASK_ID = "taskId";
+
     private Task taskData;
-    private int taskId;
-    private SingleTaskFragmentViewModel viewModel;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
 
     public static Fragment getInstance(Task task) {
         Bundle args = new Bundle();
         args.putSerializable(SERIALIZABLE_VALUE, task);
-//        args.putInt(TASK_ID, taskId);
         SingleTaskFragment fragment = new SingleTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -80,9 +77,6 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void init(View view) {
-//        System.out.println("task id first ma kati cha ? " + taskId);
-//        SingleTaskFragmentViewModelFactory factory = new SingleTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
-//        viewModel = ViewModelProviders.of(this, factory).get(SingleTaskFragmentViewModel.class);
 
         lblTitle = (TextView) view.findViewById(R.id.lblTaskTitle);
         lblDescription = (TextView) view.findViewById(R.id.lblDescription);
@@ -95,7 +89,6 @@ public class SingleTaskFragment extends Fragment {
         btnEdit = (Button) view.findViewById(R.id.btnEdit);
         btnDelete = (Button) view.findViewById(R.id.btnDelete);
 //        checkBoxCompleted.setClickable(false);
-
 
         addActionListeners();
     }
