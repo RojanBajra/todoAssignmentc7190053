@@ -34,4 +34,8 @@ public class Repository {
         return taskDaoRepository.loadAllTheTask();
     }
 
+    public LiveData<Task> loadTaskById(int taskId){
+        return taskDaoRepository.loadTaskById(taskId);
+    }
+
 }

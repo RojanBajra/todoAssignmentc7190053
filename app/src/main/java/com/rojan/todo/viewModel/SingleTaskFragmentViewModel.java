@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Task;
 
 import java.util.List;
@@ -18,8 +20,10 @@ public class SingleTaskFragmentViewModel extends AndroidViewModel {
 
     public SingleTaskFragmentViewModel(@NonNull Application application, int taskId) {
         super(application);
+        AppDatabase database = AppDatabase.getInstance(application);
+        Repository repository = new Repository(database);
+        task = repository.loadTaskById(taskId);
     }
-
 
     public int getLblPriorityColor() {
         return lblPriorityColor;
