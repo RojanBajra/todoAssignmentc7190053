@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rojan.todo.R;
 import com.rojan.todo.model.Task;
+import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.TodoListAdapterViewModel;
 
 import java.text.SimpleDateFormat;
@@ -87,7 +88,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof TodoListViewHolder) {
             ((TodoListViewHolder) holder).lblTitle.setText(listOfData.get(position - 1).getTaskName());
             ((TodoListViewHolder) holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
-            ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
+            ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + DateFormatUtils.getInstance().dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
 //            ((TodoListViewHolder) holder).lblTitle.setTextColor(ContextCompat.getColor(context, settingColor(position - 1)));
             ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
         } else if (holder instanceof StatViewHolder) {
@@ -121,29 +122,11 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private String generateTotalToday() {
         int counter = 0;
         for (Task singleTask : listOfData) {
-            if (generateCurrentDate().equals(dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy"))) {
+            if (DateFormatUtils.getInstance().generateCurrentDate().equals(DateFormatUtils.getInstance().dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy"))) {
                 counter++;
             }
         }
         return "" + counter;
-    }
-
-    private String generateCurrentDate() {
-        Date c = Calendar.getInstance().getTime();
-
-        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-        return df.format(c);
-    }
-
-    private String dateConverter(Date date, String datePattern) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
-        String dateVal = "";
-        try {
-            dateVal = dateFormat.format(date);
-        } catch (Exception e) {
-
-        }
-        return dateVal;
     }
 
     public class TodoListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
