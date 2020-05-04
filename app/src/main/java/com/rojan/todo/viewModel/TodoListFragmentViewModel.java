@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.AddTask;
 import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Task;
 
 import java.util.List;
@@ -20,15 +21,13 @@ public class TodoListFragmentViewModel extends AndroidViewModel {
 
     public TodoListFragmentViewModel(@NonNull Application application) {
         super(application);
-        listOfTask = (AppDatabase.getInstance(getApplication()).taskDao().loadAllTheTask());
+        AppDatabase database = AppDatabase.getInstance(application);
+        Repository repository = new Repository(database);
+        listOfTask = (repository.loadAllTask());
     }
 
     public LiveData<List<Task>> getListOfTask() {
         return listOfTask;
-    }
-
-    public void setListOfTask(LiveData<List<Task>> listOfTask) {
-        this.listOfTask = listOfTask;
     }
 
 }

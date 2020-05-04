@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.rojan.todo.SingleTaskFragment;
 import com.rojan.todo.model.Task;
-import com.rojan.todo.viewModel.SingleTaskViewPagerAdapterViewModel;
 
 import java.util.List;
 

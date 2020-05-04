@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
-import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.SingleTaskViewModel;
 
@@ -42,26 +41,20 @@ public class SingleTask extends AppCompatActivity {
         Intent intent = getIntent();
 
         viewModel.setPosition(intent.getIntExtra(POSITION_CLICKED, 10));
-
         viewPagerSingleTask = (ViewPager) findViewById(R.id.viewPagerSingleTask);
 
         adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager(), this);
-
         viewPagerSingleTask.setAdapter(adapter);
-        viewPagerSingleTask.setCurrentItem(2);
-        System.out.println("setting current page ");
 
-        retrieveData();
+        observeTasks();
 
     }
 
-    private void retrieveData(){
-
-        viewModel.setListOfTask(AppDatabase.getInstance(this).taskDao().loadAllTheTask());
+    private void observeTasks(){
 
         viewModel.getListOfTask().observe(this, new Observer<List<Task>>() {
             @Override
-            public void onChanged(List<Task> tasks) {
+            public void onChanged(List<Task> tasks){
                 adapter.setData(tasks);
                 viewPagerSingleTask.setCurrentItem(viewModel.getPosition());
                 viewPagerSingleTask.setOffscreenPageLimit(viewModel.getListOfTask().getValue().size());

@@ -1,6 +1,10 @@
 package com.rojan.todo.database;
 
+import androidx.lifecycle.LiveData;
+
 import com.rojan.todo.model.Task;
+
+import java.util.List;
 
 public class Repository {
     private TaskDao taskDaoRepository;
@@ -24,6 +28,10 @@ public class Repository {
                 taskDaoRepository.insertTask(task);
             }
         });
+    }
+
+    public LiveData<List<Task>> loadAllTask(){
+        return taskDaoRepository.loadAllTheTask();
     }
 
 }
