@@ -16,31 +16,28 @@ import java.util.List;
 
 public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
 
-    private SingleTaskViewPagerAdapterViewModel viewModel;
     private Context context;
+    private List<Task> tasks;
 
-    public void setData(List<Task> task){
-        viewModel.setListOfTask(task);
+    public void setData(List<Task> tasks){
+        this.tasks = tasks;
         notifyDataSetChanged();
     }
 
     public SingleTaskViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
-        viewModel = ViewModelProviders.of((FragmentActivity) context).get(SingleTaskViewPagerAdapterViewModel.class);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        System.out.println("fragment creation " + position);
-        SingleTaskFragment fragment = (SingleTaskFragment) SingleTaskFragment.getInstance(viewModel.getListOfTask().get(position));
-        System.out.println("you sakyo hai");
+        SingleTaskFragment fragment = (SingleTaskFragment) SingleTaskFragment.getInstance(tasks.get(position));
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return viewModel.getListOfTask() == null ? 0 : viewModel.getListOfTask().size();
+        return tasks == null ? 0 : tasks.size();
     }
 }
