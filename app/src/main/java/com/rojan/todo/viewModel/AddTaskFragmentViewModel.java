@@ -27,19 +27,21 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     private int valPriority;
     private Repository repository;
     private LiveData<Task> taskToEdit;
-    private int taskId;
+//    private int taskId;
+    private String btnName, topLblTitle;
 
     public AddTaskFragmentViewModel(@NonNull Application application, int taskId) {
         super(application);
-        this.taskId = taskId;
+//        this.taskId = taskId;
 
         AppDatabase database = AppDatabase.getInstance(application);
         repository = new Repository(database);
 
         taskToEdit = repository.loadTaskById(taskId);
         LiveData<List<Task>> d = repository.loadAllTask();
-//        System.out.println("yo chchi aaira cha ni " + d.getValue().get(0).getTaskName());
-//        System.out.println("data aako yo ho " + taskToEdit.getValue().getTaskId() + " name " + taskToEdit.getValue().getTaskName());
+        System.out.println("yo run huncha?");
+        btnName = "EDIT TASK";
+        topLblTitle = "EDIT THE TASK";
         init();
         setDefaultLabelText();
     }
@@ -49,6 +51,9 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
 
         AppDatabase database = AppDatabase.getInstance(application);
         repository = new Repository(database);
+//        taskId = -1;
+        btnName = "ADD TASK";
+        topLblTitle = "ADD A TODO TASK";
 
         init();
         setDefaultLabelText();
@@ -74,7 +79,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         lblPriorityColor = R.color.colorBlack;
     }
 
-    public void saveIntoDatabase(){
+    public void saveIntoDatabase(boolean isAdding){
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
         Date date = new Date();
 
@@ -95,8 +100,12 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                 date
         );
 
-
-        repository.insertTask(task);
+        if(isAdding) {
+            repository.insertTask(task);
+        }else{
+            System.out.println("task name update " + task.getTaskName());
+            repository.updateOverallTask(task);
+        }
 
     }
 
@@ -120,6 +129,22 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         return "Title: " + valTitle + "\nDescription: " + valDescription + "\nDate: " + valDate + "\nTime: " + valTime + "\nPriority" + valPriority;
     }
 
+    public String getTopLblTitle() {
+        return topLblTitle;
+    }
+
+    public void setTopLblTitle(String topLblTitle) {
+        this.topLblTitle = topLblTitle;
+    }
+
+    public String getBtnName() {
+        return btnName;
+    }
+
+    public void setBtnName(String btnName) {
+        this.btnName = btnName;
+    }
+
     public LiveData<Task> getTaskToEdit() {
         return taskToEdit;
     }
@@ -128,13 +153,13 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         this.taskToEdit = taskToEdit;
     }
 
-    public int getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
+//    public int getTaskId() {
+//        return taskId;
+//    }
+//
+//    public void setTaskId(int taskId) {
+//        this.taskId = taskId;
+//    }
 
     public int getLblTitleColor() {
         return lblTitleColor;

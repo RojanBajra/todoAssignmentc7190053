@@ -30,6 +30,16 @@ public class Repository {
         });
     }
 
+    public void updateOverallTask(final Task task){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("task name update " + task.getTaskName());
+                taskDaoRepository.updateTask(task);
+            }
+        });
+    }
+
     public LiveData<List<Task>> loadAllTask(){
         return taskDaoRepository.loadAllTheTask();
     }

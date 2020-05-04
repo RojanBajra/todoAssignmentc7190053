@@ -46,42 +46,50 @@ import java.util.Date;
 public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public static String EDIT_PAGE_KEY = "editPage";
+    public static int DEFAULT_TASK_ID = -1;
+    public static final String INSTANCE_TASK_ID = "instanceTaskId";
+
     private Button btnDatePicker, btnTimePicker, btnAddTask;
     private EditText txtTaskDate, txtTaskTime, txtTitle, txtDescription;
-    private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority;
+    private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority, lblAddTaskTitle;
     private RadioButton radioButtonHigh, radioButtonLow, radioButtonMedium;
     private RadioGroup radioGroup;
 
     private AddTaskFragmentViewModel viewModel;
     private int taskId;
 
-    public static Fragment getInstance(int taskId){
-        Bundle args = new Bundle();
-        args.putInt(EDIT_PAGE_KEY, taskId);
-        AddTaskFragment fragment = new AddTaskFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static Fragment getInstance(int taskId){
+//        Bundle args = new Bundle();
+//        args.putInt(EDIT_PAGE_KEY, taskId);
+//        AddTaskFragment fragment = new AddTaskFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public AddTaskFragment(){
 
     }
 
-    public AddTaskFragment(int taskId) {
+    public AddTaskFragment(int taskId){
+        this.taskId = taskId;
+    }
+
+//    public AddTaskFragment() {
 //        if(taskId == -1){
 //            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
 //        }else {
 //
 //        }
-        this.taskId = taskId;
-    }
+//        viewModel.setTaskId(taskId);
+//    }
 
     @Override
     public void onStart() {
         super.onStart();
         Bundle args = getArguments();
+        System.out.println("while rotating on start " + args);
         if (args != null) {
-            taskId = args.getInt(EDIT_PAGE_KEY);
+            taskId = (args.getInt(EDIT_PAGE_KEY));
         }
     }
 
@@ -90,8 +98,19 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
+        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)){
+            taskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
+        }
         init(view);
+//        System.out.println("view model ko data " + viewModel.getValTitle());
+        setDefaultText();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(INSTANCE_TASK_ID, taskId);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -124,6 +143,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         lblDescription = view.findViewById(R.id.lblTaskDesription);
         lblTaskDate = view.findViewById(R.id.lblTaskDate);
         lblPriority = view.findViewById(R.id.lblPriority);
+        lblAddTaskTitle = view.findViewById(R.id.lblAddTask);
 
         radioButtonHigh = view.findViewById(R.id.radioButtonHigh);
         radioButtonLow = view.findViewById(R.id.radioButtonLow);
@@ -140,15 +160,19 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtTaskTime = view.findViewById(R.id.txtTaskTime);
 
         // view model
-        if (taskId == -1){
+        System.out.println("while rotating " + taskId);
+        if (taskId == DEFAULT_TASK_ID){
+            System.out.println("while rotating task equal");
             viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
-            viewModel.setTaskId(taskId);
+            taskId = (taskId);
         }else{
+            System.out.println("while rotating task not equal");
             AddTaskFragmentViewModelFactory factory = new AddTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
             viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
             viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
                 @Override
                 public void onChanged(Task task) {
+                    viewModel.getTaskToEdit().removeObserver(this);
                     setEditableData(task);
                 }
             });
@@ -156,7 +180,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
         //viewModel.init();
 
-        setDefaultText();
+
 
         addActionListeners();
     }
@@ -199,12 +223,18 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
             viewModel.setValPriority(viewModel.retrievePriorityValue(radioGroup));
-//            saveIntoDatabase();
-            viewModel.saveIntoDatabase();
-            getActivity().finish();
+            if (taskId == DEFAULT_TASK_ID){
+
+                viewModel.saveIntoDatabase(true);
+
+            }else{
+                viewModel.saveIntoDatabase(false);
+            }
         } else {
             checkEmptyTextField();
         }
+        getActivity().finish();
+
     }
 
     private void setDefaultText() {
@@ -212,6 +242,9 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         lblDescription.setText(viewModel.getLblValDescription());
         lblTaskDate.setText(viewModel.getLblValDate());
         lblPriority.setText(viewModel.getLblValPriority());
+        btnAddTask.setText(viewModel.getBtnName());
+        lblAddTaskTitle.setText(viewModel.getTopLblTitle());
+
         setDefaultTextColor();
     }
 
