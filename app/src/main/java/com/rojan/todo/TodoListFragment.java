@@ -41,6 +41,9 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         init(view);
+        if (savedInstanceState == null){
+            loadFragment();
+        }
         return view;
     }
 
@@ -60,12 +63,14 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
             }
         });
 
+        viewModel = ViewModelProviders.of(getActivity()).get(TodoListFragmentViewModel.class);
+        retrieveTasks();
+    }
+
+    private void loadFragment(){
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TodoListAdapter(getActivity(), this);
         listTodo.setAdapter(adapter);
-
-        viewModel = ViewModelProviders.of(getActivity()).get(TodoListFragmentViewModel.class);
-        retrieveTasks();
     }
 
     private void retrieveTasks() {
