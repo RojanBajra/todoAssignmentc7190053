@@ -31,23 +31,23 @@ import java.util.List;
 
 public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    //    List<Task> listOfData;
-    TodoListAdapterViewModel viewModel;
-//    Context context;
-//    OnTaskClickListener onTaskClickListener;
+    List<Task> listOfData;
+    //    TodoListAdapterViewModel viewModel;
+    Context context;
+    OnTaskClickListener onTaskClickListener;
 
     public void setData(List<Task> listOfData) {
-//        this.listOfData = listOfData;
-        viewModel.setListOfData(listOfData);
+        this.listOfData = listOfData;
+//        viewModel.setListOfData(listOfData);
         notifyDataSetChanged();
     }
 
     public TodoListAdapter(Context context, OnTaskClickListener onTaskClickListener) {
-//        this.context = context;
-        viewModel.setContext(context);
+//        viewModel.setContext(context);
 //        viewModel = ViewModelProviders.of((FragmentActivity) viewModel.getContext()).get(TodoListAdapterViewModel.class);
-//        this.onTaskClickListener = onTaskClickListener;
-        viewModel.setOnTaskClickListener(onTaskClickListener);
+        this.onTaskClickListener = onTaskClickListener;
+        this.context = context;
+//        viewModel.setOnTaskClickListener(onTaskClickListener);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todo_list, parent, false);
-                holder = new TodoListViewHolder(view, viewModel.getOnTaskClickListener());
+                holder = new TodoListViewHolder(view, onTaskClickListener);
                 break;
         }
         return holder;
@@ -85,66 +85,66 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TodoListViewHolder) {
-            ((TodoListViewHolder) holder).lblTitle.setText(viewModel.getListOfData().get(position - 1).getTaskName());
-            ((TodoListViewHolder) holder).lblDescription.setText(viewModel.getListOfData().get(position - 1).getTaskDescription());
-            ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + viewModel.dateConverter(viewModel.getListOfData().get(position - 1).getTaskDate(), "MM-dd-yyyy"));
+            ((TodoListViewHolder) holder).lblTitle.setText(listOfData.get(position - 1).getTaskName());
+            ((TodoListViewHolder) holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
+            ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
 //            ((TodoListViewHolder) holder).lblTitle.setTextColor(ContextCompat.getColor(context, settingColor(position - 1)));
-            ((TodoListViewHolder) holder).container.setBackground(viewModel.settingBackground(position - 1));
+            ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
         } else if (holder instanceof StatViewHolder) {
 //            ((StatViewHolder)holder).lblToday.setText("1000");
-            ((StatViewHolder) holder).lblToday.setText(viewModel.generateTotalToday());
-            ((StatViewHolder) holder).lblAll.setText(Integer.toString(viewModel.getListOfData().size()));
+            ((StatViewHolder) holder).lblToday.setText(generateTotalToday());
+            ((StatViewHolder) holder).lblAll.setText(Integer.toString(listOfData.size()));
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return viewModel.getListOfData() == null ? 0 : viewModel.getListOfData().size() + 1;
+        return listOfData == null ? 0 : listOfData.size() + 1;
     }
 
-//    private Drawable settingBackground(int position){
-//        Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.list_border_background);
-//        Drawable drawable1 = DrawableCompat.wrap(drawable);
-//        if (viewModel.getListOfData().get(position).getPriority() == 0){
-//            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorRed));
-//            return drawable1;
-//        }else if (viewModel.getListOfData().get(position).getPriority() == 1){
-//            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorOrange));
-//            return drawable1;
-//        }else {
-//            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorYellowForText));
-//            return drawable1;
-//        }
-//    }
+    private Drawable settingBackground(int position) {
+        Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.list_border_background);
+        Drawable drawable1 = DrawableCompat.wrap(drawable);
+        if (listOfData.get(position).getPriority() == 0) {
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorRed));
+            return drawable1;
+        } else if (listOfData.get(position).getPriority() == 1) {
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorOrange));
+            return drawable1;
+        } else {
+            DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.colorYellowForText));
+            return drawable1;
+        }
+    }
 
-//    private String generateTotalToday() {
-//        int counter = 0;
-//        for (Task singleTask : viewModel.getListOfData()) {
-//            if (generateCurrentDate().equals(dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy"))) {
-//                counter++;
-//            }
-//        }
-//        return "" + counter;
-//    }
-//
-//    private String generateCurrentDate() {
-//        Date c = Calendar.getInstance().getTime();
-//
-//        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-//        return df.format(c);
-//    }
-//
-//    private String dateConverter(Date date, String datePattern) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
-//        String dateVal = "";
-//        try {
-//            dateVal = dateFormat.format(date);
-//        } catch (Exception e) {
-//
-//        }
-//        return dateVal;
-//    }
+    private String generateTotalToday() {
+        int counter = 0;
+        for (Task singleTask : listOfData) {
+            if (generateCurrentDate().equals(dateConverter(singleTask.getTaskDate(), "MM-dd-yyyy"))) {
+                counter++;
+            }
+        }
+        return "" + counter;
+    }
+
+    private String generateCurrentDate() {
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        return df.format(c);
+    }
+
+    private String dateConverter(Date date, String datePattern) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+        String dateVal = "";
+        try {
+            dateVal = dateFormat.format(date);
+        } catch (Exception e) {
+
+        }
+        return dateVal;
+    }
 
     public class TodoListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -175,7 +175,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    public class StatViewHolder extends RecyclerView.ViewHolder{
+    public class StatViewHolder extends RecyclerView.ViewHolder {
 
         private TextView lblToday, lblAll;
 
@@ -189,7 +189,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    public interface OnTaskClickListener{
+    public interface OnTaskClickListener {
         public void onTaskClicked(int position);
     }
 }
