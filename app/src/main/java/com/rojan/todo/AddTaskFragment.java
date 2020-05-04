@@ -27,6 +27,7 @@ import android.widget.TimePicker;
 
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
+import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.AddTaskFragmentViewModel;
 
 import java.text.DateFormat;
@@ -85,8 +86,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         calendar.set(i, i1, i2);
         String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         txtTaskDate.setText(dateVal);
-        System.out.println("this part is providing date");
-//        viewModel.setValDate(i + "-" + (i1 + 1) + "-" + i2);
         viewModel.setValDate((calendar.getTime()));
     }
 
@@ -96,12 +95,9 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         calendar.set(i, i1);
         Date c = Calendar.getInstance().getTime();
         calendar.set(c.getYear(), c.getMonth(), c.getDate(), i, i1);
-        String dateVal = (DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime()));
         String timeVal = i + ":" + i1;
         txtTaskTime.setText(timeVal);
         viewModel.setValTime(calendar.getTime());
-        System.out.println("time yeta aaira cha " + calendar.getTime());
-//        viewModel.setValTime(i + ":" + i1);
     }
 
     private void init(View view) {
@@ -217,7 +213,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         Date date = new Date();
 
         try {
-            date = format.parse(generateCurrentDate());
+            date = format.parse(DateFormatUtils.getInstance().generateCurrentDate());
         }catch (Exception e){
 
         }
@@ -241,14 +237,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         });
 
         getActivity().finish();
-    }
-
-    private String generateCurrentDate(){
-        Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
-
-        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-        return df.format(c);
     }
 
     private void checkEmptyTextField() {
