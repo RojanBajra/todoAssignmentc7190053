@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
+import com.rojan.todo.viewModelFactory.SingleTaskFragmentViewModelFactory;
 
 import org.w3c.dom.Text;
 
@@ -34,7 +36,9 @@ import java.util.List;
 public class SingleTaskFragment extends Fragment {
 
     private static String SERIALIZABLE_VALUE = "getTask";
+    private static String TASK_ID = "taskId";
     private Task taskData;
+    private int taskId;
     private SingleTaskFragmentViewModel viewModel;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
@@ -42,6 +46,7 @@ public class SingleTaskFragment extends Fragment {
     public static Fragment getInstance(Task task) {
         Bundle args = new Bundle();
         args.putSerializable(SERIALIZABLE_VALUE, task);
+//        args.putInt(TASK_ID, taskId);
         SingleTaskFragment fragment = new SingleTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,8 +60,11 @@ public class SingleTaskFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Bundle args = getArguments();
+        System.out.println("yo vayo ta ?");
+
         if (args != null) {
             taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
+            System.out.println(" now yeta k cha " + taskData);
         }
         setValues();
     }
@@ -72,6 +80,10 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void init(View view) {
+//        System.out.println("task id first ma kati cha ? " + taskId);
+//        SingleTaskFragmentViewModelFactory factory = new SingleTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
+//        viewModel = ViewModelProviders.of(this, factory).get(SingleTaskFragmentViewModel.class);
+
         lblTitle = (TextView) view.findViewById(R.id.lblTaskTitle);
         lblDescription = (TextView) view.findViewById(R.id.lblDescription);
         lblDate = (TextView) view.findViewById(R.id.lblTaskDate);
@@ -84,19 +96,8 @@ public class SingleTaskFragment extends Fragment {
         btnDelete = (Button) view.findViewById(R.id.btnDelete);
 //        checkBoxCompleted.setClickable(false);
 
-        addActionListeners();
-    }
 
-    private void setValues() {
-        lblTitle.setText(taskData.getTaskName());
-        lblDescription.setText(taskData.getTaskDescription());
-        lblCreatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
-        lblUpdatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
-        lblDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(taskData.getTaskDate()));
-        lblTime.setText(DateFormatUtils.getInstance().dateConverter(taskData.getTaskTime(), "HH:mm"));
-        lblPriority.setText(getPriorityValue(taskData.getPriority()));
-        lblCompleted.setText(taskData.isCompleted() ? "complete" : "incomplete");
-        lblCompleted.setTextColor(taskData.isCompleted() ? ContextCompat.getColor(getActivity(), R.color.colorGreen) : ContextCompat.getColor(getActivity(), R.color.colorRed));
+        addActionListeners();
     }
 
     private void addActionListeners() {
@@ -112,6 +113,18 @@ public class SingleTaskFragment extends Fragment {
                 btnDeleteClicked();
             }
         });
+    }
+
+    private void setValues() {
+        lblTitle.setText(taskData.getTaskName());
+        lblDescription.setText(taskData.getTaskDescription());
+        lblCreatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
+        lblUpdatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
+        lblDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(taskData.getTaskDate()));
+        lblTime.setText(DateFormatUtils.getInstance().dateConverter(taskData.getTaskTime(), "HH:mm"));
+        lblPriority.setText(getPriorityValue(taskData.getPriority()));
+        lblCompleted.setText(taskData.isCompleted() ? "complete" : "incomplete");
+        lblCompleted.setTextColor(taskData.isCompleted() ? ContextCompat.getColor(getActivity(), R.color.colorGreen) : ContextCompat.getColor(getActivity(), R.color.colorRed));
     }
 
     private void btnEditClicked() {

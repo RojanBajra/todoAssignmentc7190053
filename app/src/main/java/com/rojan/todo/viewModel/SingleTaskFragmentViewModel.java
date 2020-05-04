@@ -22,7 +22,18 @@ public class SingleTaskFragmentViewModel extends AndroidViewModel {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
         Repository repository = new Repository(database);
+
         task = repository.loadTaskById(taskId);
+        System.out.println("tesovaye taskId kati cha " + taskId);
+        System.out.println("task bata view model bata " + task.getValue());
+    }
+
+    public LiveData<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(LiveData<Task> task) {
+        this.task = task;
     }
 
     public int getLblPriorityColor() {
