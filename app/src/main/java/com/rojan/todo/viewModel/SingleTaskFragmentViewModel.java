@@ -1,5 +1,9 @@
 package com.rojan.todo.viewModel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -7,18 +11,15 @@ import com.rojan.todo.model.Task;
 
 import java.util.List;
 
-public class SingleTaskFragmentViewModel extends ViewModel {
+public class SingleTaskFragmentViewModel extends AndroidViewModel {
 
-    private Task task;
+    private LiveData<Task> task;
     private int lblPriorityColor;
 
-    public Task getTask() {
-        return task;
+    public SingleTaskFragmentViewModel(@NonNull Application application, int taskId) {
+        super(application);
     }
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
 
     public int getLblPriorityColor() {
         return lblPriorityColor;

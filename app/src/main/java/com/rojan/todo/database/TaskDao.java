@@ -27,7 +27,7 @@ public interface TaskDao {
     @Delete
     void deleteTask(Task task);
 
-    @Query("Update task set isCompleted = :isCompleted where taskId = :taskId")
-    void updateIsCompleted(int taskId, boolean isCompleted);
+    @Query("select * from task where taskId = :taskId")
+    LiveData<Task> loadTaskById(int taskId);
 
 }

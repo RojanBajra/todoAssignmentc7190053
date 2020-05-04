@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.model.Task;
+import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
 
 import org.w3c.dom.Text;
@@ -34,6 +35,7 @@ public class SingleTaskFragment extends Fragment {
 
     private static String SERIALIZABLE_VALUE = "getTask";
     private Task taskData;
+    private SingleTaskFragmentViewModel viewModel;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
 
@@ -81,22 +83,23 @@ public class SingleTaskFragment extends Fragment {
         btnEdit = (Button) view.findViewById(R.id.btnEdit);
         btnDelete = (Button) view.findViewById(R.id.btnDelete);
 //        checkBoxCompleted.setClickable(false);
+
         addActionListeners();
     }
 
-    private void setValues(){
+    private void setValues() {
         lblTitle.setText(taskData.getTaskName());
         lblDescription.setText(taskData.getTaskDescription());
-        lblCreatedOn.setText(dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
-        lblUpdatedOn.setText(dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
+        lblCreatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
+        lblUpdatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
         lblDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(taskData.getTaskDate()));
-        lblTime.setText(dateConverter(taskData.getTaskTime(), "HH:mm"));
+        lblTime.setText(DateFormatUtils.getInstance().dateConverter(taskData.getTaskTime(), "HH:mm"));
         lblPriority.setText(getPriorityValue(taskData.getPriority()));
         lblCompleted.setText(taskData.isCompleted() ? "complete" : "incomplete");
         lblCompleted.setTextColor(taskData.isCompleted() ? ContextCompat.getColor(getActivity(), R.color.colorGreen) : ContextCompat.getColor(getActivity(), R.color.colorRed));
     }
 
-    private void addActionListeners(){
+    private void addActionListeners() {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,11 +114,11 @@ public class SingleTaskFragment extends Fragment {
         });
     }
 
-    private void btnEditClicked(){
+    private void btnEditClicked() {
 
     }
 
-    private void btnDeleteClicked(){
+    private void btnDeleteClicked() {
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -123,17 +126,6 @@ public class SingleTaskFragment extends Fragment {
                 getActivity().finish();
             }
         });
-    }
-
-    private String dateConverter(Date date, String datePattern) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
-        String dateVal = "";
-        try {
-            dateVal = dateFormat.format(date);
-        } catch (Exception e) {
-
-        }
-        return dateVal;
     }
 
     private String getPriorityValue(int priorityNumber) {
