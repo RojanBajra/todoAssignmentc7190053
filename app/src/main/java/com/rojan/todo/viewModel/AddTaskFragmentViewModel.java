@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.R;
 import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 
@@ -21,9 +22,14 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     private String lblValTitle, lblValDescription, lblValDate, lblValPriority;
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
+    private Repository repository;
 
     public AddTaskFragmentViewModel(@NonNull Application application) {
         super(application);
+
+        AppDatabase database = AppDatabase.getInstance(getApplication());
+        repository = new Repository(database);
+
         valTitle = "";
         valDescription = "";
         valDate = new Date();
@@ -66,8 +72,8 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                 date
         );
 
-        AppDatabase database = AppDatabase.getInstance(getApplication());
-        database.taskDao().insertTask(task);
+
+        repository.insertTask(task);
 
     }
 
