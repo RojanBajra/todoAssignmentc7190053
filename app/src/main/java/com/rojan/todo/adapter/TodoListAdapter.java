@@ -23,22 +23,17 @@ import java.util.List;
 public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<Task> listOfData;
-    //    TodoListAdapterViewModel viewModel;
     Context context;
     OnTaskClickListener onTaskClickListener;
 
     public void setData(List<Task> listOfData) {
         this.listOfData = listOfData;
-//        viewModel.setListOfData(listOfData);
         notifyDataSetChanged();
     }
 
     public TodoListAdapter(Context context, OnTaskClickListener onTaskClickListener) {
-//        viewModel.setContext(context);
-//        viewModel = ViewModelProviders.of((FragmentActivity) viewModel.getContext()).get(TodoListAdapterViewModel.class);
         this.onTaskClickListener = onTaskClickListener;
         this.context = context;
-//        viewModel.setOnTaskClickListener(onTaskClickListener);
     }
 
     @Override
@@ -55,7 +50,6 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
         View view;
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
 
             case R.layout.stats_for_todo_list:
@@ -79,10 +73,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((TodoListViewHolder) holder).lblTitle.setText(listOfData.get(position - 1).getTaskName());
             ((TodoListViewHolder) holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
             ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + DateFormatUtils.getInstance().dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
-//            ((TodoListViewHolder) holder).lblTitle.setTextColor(ContextCompat.getColor(context, settingColor(position - 1)));
             ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
         } else if (holder instanceof StatViewHolder) {
-//            ((StatViewHolder)holder).lblToday.setText("1000");
             ((StatViewHolder) holder).lblToday.setText(generateTotalToday());
             ((StatViewHolder) holder).lblAll.setText(Integer.toString(listOfData.size()));
         }
@@ -142,7 +134,6 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @Override
         public void onClick(View view) {
-            System.out.println("yeta chahi chiryo");
             onTaskClickListener.onTaskClicked(getAdapterPosition());
         }
 
@@ -151,7 +142,6 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class StatViewHolder extends RecyclerView.ViewHolder {
 
         private TextView lblToday, lblAll;
-
 
         public StatViewHolder(@NonNull View itemView) {
             super(itemView);

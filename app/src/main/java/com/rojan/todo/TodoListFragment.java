@@ -55,7 +55,6 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     private void init(View view) {
         listTodo = (RecyclerView) view.findViewById(R.id.listTodo);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabAddTask);
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
