@@ -1,6 +1,8 @@
 package com.rojan.todo.viewModel;
 
 import android.app.Application;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -75,6 +77,20 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
 
         repository.insertTask(task);
 
+    }
+
+    public int retrievePriorityValue(RadioGroup radioGroup){
+        switch (radioGroup.getCheckedRadioButtonId()){
+            case R.id.radioButtonHigh:
+                return 0;
+
+            case R.id.radioButtonMedium:
+                return 1;
+
+            case R.id.radioButtonLow:
+            default:
+                return 2;
+        }
     }
 
     @NonNull

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -46,6 +47,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     private EditText txtTaskDate, txtTaskTime, txtTitle, txtDescription;
     private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority;
     private RadioButton radioButtonHigh, radioButtonLow, radioButtonMedium;
+    private RadioGroup radioGroup;
 
     private AddTaskFragmentViewModel viewModel;
     private int taskId;
@@ -115,6 +117,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         radioButtonLow = view.findViewById(R.id.radioButtonLow);
         radioButtonMedium = view.findViewById(R.id.radioButtonMedium);
 
+        radioGroup = view.findViewById(R.id.radioGroup);
+
         // For date picker
         btnDatePicker = view.findViewById(R.id.btnDatePicker);
         txtTaskDate = view.findViewById(R.id.txtTaskDate);
@@ -162,7 +166,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
-            retrievePriorityValue();
+            viewModel.setValPriority(viewModel.retrievePriorityValue(radioGroup));
 //            saveIntoDatabase();
             viewModel.saveIntoDatabase();
             getActivity().finish();
@@ -210,6 +214,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         timePickerDialog.show();
     }
 
+    // do we need to put this in view model?
     private void checkEmptyTextField() {
 
         if (txtTitle.getText().toString().isEmpty()) {
@@ -233,16 +238,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             lblTaskDate.setTextColor(ContextCompat.getColor(getActivity(), viewModel.getLblDateColor()));
         }
 
-    }
-
-    private void retrievePriorityValue(){
-        if (radioButtonHigh.isChecked()){
-            viewModel.setValPriority(0);
-        }else if (radioButtonMedium.isChecked()){
-            viewModel.setValPriority(1);
-        }else if (radioButtonLow.isChecked()){
-            viewModel.setValPriority(2);
-        }
     }
 
 }
