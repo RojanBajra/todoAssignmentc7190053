@@ -29,8 +29,7 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        System.out.println("is this calling this again");
-//        viewModel = ViewModelProviders.of(this).get(AddTaskViewModel.class);
+
         taskId = getIntent().getIntExtra(TASK_ID, DEFAULT_TASK_ID);
         if(taskId != DEFAULT_TASK_ID){
             System.out.println("This is printing " + taskId);

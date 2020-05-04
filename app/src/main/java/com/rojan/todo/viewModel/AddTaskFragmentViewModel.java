@@ -1,13 +1,20 @@
 package com.rojan.todo.viewModel;
 
+import android.app.Application;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
 import com.rojan.todo.R;
+import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.model.Task;
+import com.rojan.todo.utils.DateFormatUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddTaskFragmentViewModel extends ViewModel {
+public class AddTaskFragmentViewModel extends AndroidViewModel {
 
     private String valTitle, valDescription;
     private Date valDate, valTime;
@@ -15,8 +22,8 @@ public class AddTaskFragmentViewModel extends ViewModel {
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
 
-    public AddTaskFragmentViewModel(){
-        super();
+    public AddTaskFragmentViewModel(@NonNull Application application) {
+        super(application);
         valTitle = "";
         valDescription = "";
         valDate = new Date();
@@ -35,6 +42,32 @@ public class AddTaskFragmentViewModel extends ViewModel {
         lblDescriptionColor = R.color.colorBlack;
         lblDateColor = R.color.colorBlack;
         lblPriorityColor = R.color.colorBlack;
+
+    }
+
+    public void saveIntoDatabase(){
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        Date date = new Date();
+
+        try {
+            date = format.parse(DateFormatUtils.getInstance().generateCurrentDate());
+        }catch (Exception e){
+
+        }
+
+        final Task task = new Task(
+                getValTitle(),
+                getValDescription(),
+                getValDate(),
+                getValTime(),
+                false,
+                getValPriority(),
+                date,
+                date
+        );
+
+        AppDatabase database = AppDatabase.getInstance(getApplication());
+        database.taskDao().insertTask(task);
 
     }
 

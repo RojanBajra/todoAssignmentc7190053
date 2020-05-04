@@ -92,6 +92,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         Calendar calendar = Calendar.getInstance();
+        System.out.println("is i and i1 printing ? i " + i + " and i1 " + i1);
         calendar.set(i, i1);
         Date c = Calendar.getInstance().getTime();
         calendar.set(c.getYear(), c.getMonth(), c.getDate(), i, i1);
@@ -162,7 +163,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             viewModel.setValTitle(txtTitle.getText().toString());
             viewModel.setValDescription(txtDescription.getText().toString());
             retrievePriorityValue();
-            saveIntoDatabase();
+//            saveIntoDatabase();
+            viewModel.saveIntoDatabase();
         } else {
             checkEmptyTextField();
         }
@@ -203,10 +205,9 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 Calendar.getInstance().get(Calendar.MINUTE),
                 android.text.format.DateFormat.is24HourFormat(getActivity())
         );
+        timePickerDialog.updateTime(Calendar.HOUR_OF_DAY, Calendar.MINUTE);
         timePickerDialog.show();
     }
-
-
 
     private void saveIntoDatabase(){
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
