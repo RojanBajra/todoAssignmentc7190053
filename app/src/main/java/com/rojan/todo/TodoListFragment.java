@@ -31,7 +31,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     private TodoListAdapter adapter;
     private TodoListFragmentViewModel viewModel;
 
-    public TodoListFragment(){
+    public TodoListFragment() {
 
     }
 
@@ -49,7 +49,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         startActivity(SingleTask.makeIntent(getActivity(), position - 1));
     }
 
-    private void init(View view){
+    private void init(View view) {
         listTodo = (RecyclerView) view.findViewById(R.id.listTodo);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabAddTask);
 
@@ -68,7 +68,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         retrieveTasks();
     }
 
-    private void retrieveTasks(){
+    private void retrieveTasks() {
         viewModel.getListOfTask().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
@@ -80,6 +80,5 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     public void btnAddTask() {
         startActivity(AddTask.makeIntent(getActivity()));
     }
-
 
 }
