@@ -120,7 +120,6 @@ public class SingleTaskFragment extends Fragment {
         lblCompleted = (TextView) view.findViewById(R.id.lblCompleted);
         btnEdit = (Button) view.findViewById(R.id.btnEdit);
         btnDelete = (Button) view.findViewById(R.id.btnDelete);
-//        checkBoxCompleted.setClickable(false);
 
         addActionListeners();
     }
