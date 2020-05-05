@@ -23,6 +23,7 @@ public class SingleTask extends AppCompatActivity {
     private SingleTaskViewModel viewModel;
 
     static public Intent makeIntent(Context context, int position){
+        SingleTaskFragment.currnetPage = -1;
         Intent intent = new Intent(context, SingleTask.class);
         intent.putExtra(POSITION_CLICKED, position);
         return intent;
@@ -33,6 +34,15 @@ public class SingleTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_task);
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewPagerSingleTask.setCurrentItem(SingleTaskFragment.currnetPage);
+        if(SingleTaskFragment.currnetPage != -1){
+            viewModel.setPosition(SingleTaskFragment.currnetPage);
+        }
     }
 
     private void init() {

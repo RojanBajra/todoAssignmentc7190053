@@ -39,17 +39,21 @@ public class SingleTaskFragment extends Fragment {
 
     private static String SERIALIZABLE_VALUE = "getTask";
     private static String TASK_ID = "taskId";
+    private static String PAGE_NUMBER = "pageNumber";
+    public static int currnetPage = -1;
 
     private Task taskData;
     private int taskId;
+    private int pageNumber;
     private LiveData<Task> taskDataSingle;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
 
-    public static Fragment getInstance(int taskId) {
+    public static Fragment getInstance(int taskId, int pageNumber) {
         Bundle args = new Bundle();
 //        args.putSerializable(SERIALIZABLE_VALUE, task);
         args.putInt(TASK_ID, taskId);
+        args.putInt(PAGE_NUMBER, pageNumber);
         SingleTaskFragment fragment = new SingleTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -68,6 +72,7 @@ public class SingleTaskFragment extends Fragment {
         if (args != null) {
 //            taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
             taskId = (int) args.getInt(TASK_ID);
+            pageNumber = (int) args.getInt(PAGE_NUMBER);
 //            System.out.println(" now yeta k cha " + taskData.getTaskName());
             AppDatabase database = AppDatabase.getInstance(getActivity());
             Repository repository = new Repository(database);
@@ -140,6 +145,7 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void btnEditClicked() {
+        currnetPage = this.pageNumber;
         startActivity(AddTask.makeIntent(getActivity(), taskData.getTaskId()));
     }
 
