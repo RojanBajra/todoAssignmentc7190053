@@ -113,7 +113,6 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     date,
                     date
             );
-            System.out.println("task name update " + task.getTaskName());
             repository.updateOverallTask(task);
         }
 

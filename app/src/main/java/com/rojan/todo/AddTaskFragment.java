@@ -74,15 +74,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         this.taskId = taskId;
     }
 
-//    public AddTaskFragment() {
-//        if(taskId == -1){
-//            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
-//        }else {
-//
-//        }
-//        viewModel.setTaskId(taskId);
-//    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -228,7 +219,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 viewModel.saveIntoDatabase(true);
 
             }else{
-                System.out.println("task id sent " + viewModel.getTaskToEdit().getValue().getTaskId());
+                System.out.println("task id sent " + this.taskId);
                 viewModel.saveIntoDatabase(false);
             }
         } else {
