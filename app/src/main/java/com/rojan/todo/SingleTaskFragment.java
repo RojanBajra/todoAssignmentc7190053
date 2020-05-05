@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
 import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
@@ -36,14 +38,18 @@ import java.util.List;
 public class SingleTaskFragment extends Fragment {
 
     private static String SERIALIZABLE_VALUE = "getTask";
+    private static String TASK_ID = "taskId";
 
     private Task taskData;
+    private int taskId;
+    private LiveData<Task> taskDataSingle;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
 
-    public static Fragment getInstance(Task task) {
+    public static Fragment getInstance(Task task, int taskId) {
         Bundle args = new Bundle();
         args.putSerializable(SERIALIZABLE_VALUE, task);
+        args.putInt(TASK_ID, taskId);
         SingleTaskFragment fragment = new SingleTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -61,16 +67,29 @@ public class SingleTaskFragment extends Fragment {
 
         if (args != null) {
             taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
-            System.out.println(" now yeta k cha " + taskData);
+            taskId = (int) args.getInt(TASK_ID);
+            System.out.println(" now yeta k cha " + taskData.getTaskName());
+            AppDatabase database = AppDatabase.getInstance(getActivity());
+            Repository repository = new Repository(database);
+            taskDataSingle = repository.loadTaskById(taskId);
+            System.out.println("yo calling cha ta? ");
+            taskDataSingle.observe(getActivity(), new Observer<Task>() {
+                @Override
+                public void onChanged(Task task) {
+                    taskData = task;
+                    setValues();
+                }
+            });
+
         }
-        setValues();
+//        setValues();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        System.out.println("third");
+        System.out.println("third call vaira cha ta");
         View view = inflater.inflate(R.layout.fragment_single_task, container, false);
         init(view);
         return view;

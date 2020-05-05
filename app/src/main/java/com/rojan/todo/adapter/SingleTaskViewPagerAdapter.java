@@ -32,7 +32,7 @@ public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        SingleTaskFragment fragment = (SingleTaskFragment) SingleTaskFragment.getInstance(tasks.get(position));
+        SingleTaskFragment fragment = (SingleTaskFragment) SingleTaskFragment.getInstance(tasks.get(position), tasks.get(position).getTaskId());
         System.out.println("get item bata kun patahkao  " + tasks.get(position).getTaskName() + " id chahi " + tasks.get(position).getTaskId());
         return fragment;
     }
