@@ -89,20 +89,30 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
 
         }
 
-        final Task task = new Task(
-                getValTitle(),
-                getValDescription(),
-                getValDate(),
-                getValTime(),
-                false,
-                getValPriority(),
-                date,
-                date
-        );
-
         if(isAdding) {
+            final Task task = new Task(
+                    getValTitle(),
+                    getValDescription(),
+                    getValDate(),
+                    getValTime(),
+                    false,
+                    getValPriority(),
+                    date,
+                    date
+            );
             repository.insertTask(task);
         }else{
+            final Task task = new Task(
+                    getTaskToEdit().getValue().getTaskId(),
+                    getValTitle(),
+                    getValDescription(),
+                    getValDate(),
+                    getValTime(),
+                    false,
+                    getValPriority(),
+                    date,
+                    date
+            );
             System.out.println("task name update " + task.getTaskName());
             repository.updateOverallTask(task);
         }

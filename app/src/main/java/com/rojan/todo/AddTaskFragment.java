@@ -228,6 +228,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 viewModel.saveIntoDatabase(true);
 
             }else{
+                System.out.println("task id sent " + viewModel.getTaskToEdit().getValue().getTaskId());
                 viewModel.saveIntoDatabase(false);
             }
         } else {
