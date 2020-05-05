@@ -46,9 +46,9 @@ public class SingleTaskFragment extends Fragment {
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
     private Button btnEdit, btnDelete;
 
-    public static Fragment getInstance(Task task, int taskId) {
+    public static Fragment getInstance(int taskId) {
         Bundle args = new Bundle();
-        args.putSerializable(SERIALIZABLE_VALUE, task);
+//        args.putSerializable(SERIALIZABLE_VALUE, task);
         args.putInt(TASK_ID, taskId);
         SingleTaskFragment fragment = new SingleTaskFragment();
         fragment.setArguments(args);
@@ -66,9 +66,9 @@ public class SingleTaskFragment extends Fragment {
         System.out.println("yo vayo ta ?");
 
         if (args != null) {
-            taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
+//            taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
             taskId = (int) args.getInt(TASK_ID);
-            System.out.println(" now yeta k cha " + taskData.getTaskName());
+//            System.out.println(" now yeta k cha " + taskData.getTaskName());
             AppDatabase database = AppDatabase.getInstance(getActivity());
             Repository repository = new Repository(database);
             taskDataSingle = repository.loadTaskById(taskId);
@@ -130,8 +130,8 @@ public class SingleTaskFragment extends Fragment {
     private void setValues() {
         lblTitle.setText(taskData.getTaskName());
         lblDescription.setText(taskData.getTaskDescription());
-        lblCreatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
-        lblUpdatedOn.setText(DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
+        lblCreatedOn.setText("Created on: " + DateFormatUtils.getInstance().dateConverter(taskData.getCreatedOn(), "MM-dd-yyyy"));
+        lblUpdatedOn.setText("Updated on: " + DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
         lblDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(taskData.getTaskDate()));
         lblTime.setText(DateFormatUtils.getInstance().dateConverter(taskData.getTaskTime(), "HH:mm"));
         lblPriority.setText(getPriorityValue(taskData.getPriority()));

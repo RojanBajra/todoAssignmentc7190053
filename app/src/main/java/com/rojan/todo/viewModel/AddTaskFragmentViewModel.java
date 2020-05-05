@@ -110,7 +110,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     getValTime(),
                     false,
                     getValPriority(),
-                    date,
+                    getTaskToEdit().getValue().getCreatedOn(),
                     date
             );
             repository.updateOverallTask(task);
