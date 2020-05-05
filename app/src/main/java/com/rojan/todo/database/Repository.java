@@ -30,6 +30,16 @@ public class Repository {
         });
     }
 
+    public void deleteTheTask(final Task task){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("repository running " + task.getTaskName());
+                taskDaoRepository.deleteTask(task);
+            }
+        });
+    }
+
     public void updateOverallTask(final Task task){
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override

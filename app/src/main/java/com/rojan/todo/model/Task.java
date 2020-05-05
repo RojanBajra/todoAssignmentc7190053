@@ -34,6 +34,18 @@ public class Task implements Serializable {
         this.updatedOn = updatedOn;
     }
 
+    public Task(){
+        this.taskId = 0;
+        this.taskName = "";
+        this.taskDescription = "";
+        this.taskDate = new Date();
+        this.taskTime = new Date();
+        this.isCompleted = false;
+        this.priority = 0;
+        this.createdOn = new Date();
+        this.updatedOn = new Date();
+    }
+
     public Task(int taskId, String taskName, String taskDescription, Date taskDate, Date taskTime, boolean isCompleted, int priority, Date createdOn, Date updatedOn){
         this.taskId = taskId;
         this.taskName = taskName;

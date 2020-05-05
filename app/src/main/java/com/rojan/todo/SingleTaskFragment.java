@@ -34,6 +34,8 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * not using a view model here as all the pages in the view pager are pointing out to the same view model
  */
 public class SingleTaskFragment extends Fragment {
 
@@ -50,6 +52,7 @@ public class SingleTaskFragment extends Fragment {
     private Button btnEdit, btnDelete;
 
     public static Fragment getInstance(int taskId, int pageNumber) {
+        System.out.println("i am running delete get instance");
         Bundle args = new Bundle();
 //        args.putSerializable(SERIALIZABLE_VALUE, task);
         args.putInt(TASK_ID, taskId);
@@ -61,11 +64,14 @@ public class SingleTaskFragment extends Fragment {
 
     public SingleTaskFragment() {
         // Required empty public constructor
+        System.out.println("i am running delete constructor");
+        taskData = new Task();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        System.out.println("i am running delete onstart");
         Bundle args = getArguments();
         System.out.println("yo vayo ta ?");
 
@@ -81,6 +87,7 @@ public class SingleTaskFragment extends Fragment {
             taskDataSingle.observe(getActivity(), new Observer<Task>() {
                 @Override
                 public void onChanged(Task task) {
+                    taskDataSingle.removeObserver(this);
                     taskData = task;
                     setValues();
                 }
@@ -94,6 +101,7 @@ public class SingleTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        System.out.println("i am running delete constructor");
         System.out.println("third call vaira cha ta");
         View view = inflater.inflate(R.layout.fragment_single_task, container, false);
         init(view);
@@ -150,13 +158,17 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void btnDeleteClicked() {
-        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
-                getActivity().finish();
-            }
-        });
+        System.out.println("is this running delete");
+//        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
+//            }
+//        });
+        AppDatabase database = AppDatabase.getInstance(getActivity());
+        Repository repository = new Repository(database);
+        repository.deleteTheTask(taskData);
+        getActivity().finish();
     }
 
     private String getPriorityValue(int priorityNumber) {
