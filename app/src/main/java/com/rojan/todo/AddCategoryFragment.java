@@ -3,12 +3,17 @@ package com.rojan.todo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.rojan.todo.viewModel.AddCategoryFragmentViewModel;
 
 
 /**
@@ -18,6 +23,7 @@ public class AddCategoryFragment extends Fragment {
 
     private EditText txtCategory;
     private Button btnAddCategory;
+    private AddCategoryFragmentViewModel viewModel;
 
     public AddCategoryFragment() {
         // Required empty public constructor
@@ -34,6 +40,8 @@ public class AddCategoryFragment extends Fragment {
     }
 
     private void init(View view){
+        viewModel = ViewModelProviders.of(getActivity()).get(AddCategoryFragmentViewModel.class);
+
         txtCategory = (EditText) view.findViewById(R.id.txtCategory);
         btnAddCategory = (Button) view.findViewById(R.id.btnAddCategory);
 
@@ -50,6 +58,11 @@ public class AddCategoryFragment extends Fragment {
     }
 
     private void btnAddCategory(){
-
+        if (!txtCategory.getText().toString().isEmpty()){
+            viewModel.setCategoryName(txtCategory.getText().toString());
+            viewModel.saveIntoDatabase();
+        }else{
+            Toast.makeText(getContext(), "Category name cannot be empty", Toast.LENGTH_LONG).show();
+        }
     }
 }
