@@ -16,7 +16,6 @@ import java.util.List;
 
 public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
 
-    private Context context;
     private List<Task> tasks;
 
     public void setData(List<Task> tasks){
