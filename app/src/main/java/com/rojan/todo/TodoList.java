@@ -38,12 +38,6 @@ public class TodoList extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.frameContainer, listTodoFragment).commit();
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.option_menu, menu);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
