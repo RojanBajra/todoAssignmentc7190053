@@ -53,7 +53,7 @@ public class SingleTask extends AppCompatActivity {
         viewModel.setPosition(intent.getIntExtra(POSITION_CLICKED, -1));
         viewPagerSingleTask = (ViewPager) findViewById(R.id.viewPagerSingleTask);
 
-        adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager(), this);
+        adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager());
         viewPagerSingleTask.setAdapter(adapter);
 
         observeTasks();

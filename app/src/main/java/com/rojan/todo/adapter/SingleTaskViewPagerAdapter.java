@@ -24,9 +24,8 @@ public class SingleTaskViewPagerAdapter extends FragmentPagerAdapter {
         notifyDataSetChanged();
     }
 
-    public SingleTaskViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
+    public SingleTaskViewPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
 
     @NonNull
