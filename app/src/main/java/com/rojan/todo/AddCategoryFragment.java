@@ -24,11 +24,15 @@ public class AddCategoryFragment extends Fragment {
     private EditText txtCategory;
     private Button btnAddCategory;
     private AddCategoryFragmentViewModel viewModel;
+    private int categoryId;
 
     public AddCategoryFragment() {
         // Required empty public constructor
     }
 
+    public AddCategoryFragment(int categoryId){
+        this.categoryId = categoryId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
