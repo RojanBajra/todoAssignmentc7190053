@@ -17,13 +17,16 @@ public class AddCategoryFragmentViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void saveIntoDatabase(){
+    public void saveIntoDatabase(int categoryId){
         AppDatabase database = AppDatabase.getInstance(getApplication());
         Repository repository = new Repository(database);
 
-        Category category = new Category(getCategoryName());
+        if (categoryId == -1){
+            Category category = new Category(getCategoryName());
 
-        repository.insertCategory(category);
+            repository.insertCategory(category);
+        }
+
     }
 
     public String getCategoryName() {
