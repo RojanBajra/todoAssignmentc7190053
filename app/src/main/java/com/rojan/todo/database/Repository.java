@@ -2,25 +2,21 @@ package com.rojan.todo.database;
 
 import androidx.lifecycle.LiveData;
 
+import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 
 import java.util.List;
 
 public class Repository {
     private TaskDao taskDaoRepository;
+    private CategoryDao categoryDaoRepository;
 
     public Repository(AppDatabase appDatabase) {
         this.taskDaoRepository = appDatabase.taskDao();
+        this.categoryDaoRepository = appDatabase.categoryDao();
     }
 
-    public TaskDao getTaskDaoRepository() {
-        return taskDaoRepository;
-    }
-
-    public void setTaskDaoRepository(TaskDao taskDaoRepository) {
-        this.taskDaoRepository = taskDaoRepository;
-    }
-
+    // Task Dao queries
     public void insertTask(final Task task){
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -56,6 +52,20 @@ public class Repository {
 
     public LiveData<Task> loadTaskById(int taskId){
         return taskDaoRepository.loadTaskById(taskId);
+    }
+
+    // Category Dao queries
+    public void insertCategory(final Category category){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryDaoRepository.insertCategory(category);
+            }
+        });
+    }
+
+    public LiveData<List<Category>> loadAllCategory() {
+        return categoryDaoRepository.loadAllTheCAtegory();
     }
 
 }
