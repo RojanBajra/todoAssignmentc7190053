@@ -50,6 +50,6 @@ public class AddCategoryFragment extends Fragment {
     }
 
     private void btnAddCategory(){
-        
+
     }
 }
