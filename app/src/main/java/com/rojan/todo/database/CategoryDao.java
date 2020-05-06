@@ -1,6 +1,7 @@
 package com.rojan.todo.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -11,6 +12,7 @@ import com.rojan.todo.model.Category;
 
 import java.util.List;
 
+@Dao
 public interface CategoryDao {
 
     @Query("select * from category order by categoryName")

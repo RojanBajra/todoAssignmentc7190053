@@ -93,6 +93,26 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             taskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
         }
         init(view);
+
+        // view model
+        System.out.println("while rotating " + taskId);
+        if (taskId == DEFAULT_TASK_ID){
+            System.out.println("while rotating task equal");
+            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
+            taskId = (taskId);
+        }else{
+            System.out.println("while rotating task not equal");
+            AddTaskFragmentViewModelFactory factory = new AddTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
+            viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
+            viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
+                @Override
+                public void onChanged(Task task) {
+                    viewModel.getTaskToEdit().removeObserver(this);
+                    setEditableData(task);
+                }
+            });
+        }
+
 //        System.out.println("view model ko data " + viewModel.getValTitle());
         setDefaultText();
         return view;
@@ -150,24 +170,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         btnTimePicker = view.findViewById(R.id.btnTimePicker);
         txtTaskTime = view.findViewById(R.id.txtTaskTime);
 
-        // view model
-        System.out.println("while rotating " + taskId);
-        if (taskId == DEFAULT_TASK_ID){
-            System.out.println("while rotating task equal");
-            viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
-            taskId = (taskId);
-        }else{
-            System.out.println("while rotating task not equal");
-            AddTaskFragmentViewModelFactory factory = new AddTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
-            viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
-            viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
-                @Override
-                public void onChanged(Task task) {
-                    viewModel.getTaskToEdit().removeObserver(this);
-                    setEditableData(task);
-                }
-            });
-        }
+
 
         //viewModel.init();
 
@@ -181,6 +184,23 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtDescription.setText(task.getTaskDescription());
         txtTaskDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(task.getTaskDate()));
         txtTaskTime.setText(task.getTaskTime().getHours() + ":" + task.getTaskTime().getMinutes());
+        setPriority(task);
+    }
+
+    private void setPriority(Task task){
+        switch (task.getPriority()){
+            case 0:
+                radioButtonHigh.setChecked(true);
+                break;
+
+            case 1:
+                radioButtonMedium.setChecked(true);
+                break;
+
+            default:
+                radioButtonLow.setChecked(true);
+                break;
+        }
     }
 
     private void addActionListeners() {
