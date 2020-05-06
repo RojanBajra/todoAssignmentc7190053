@@ -12,21 +12,30 @@ import com.rojan.todo.model.Category;
 public class AddCategoryFragmentViewModel extends AndroidViewModel {
 
     private String categoryName;
+    private int categoryId;
 
     public AddCategoryFragmentViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void saveIntoDatabase(int categoryId){
+    public void saveIntoDatabase(){
         AppDatabase database = AppDatabase.getInstance(getApplication());
         Repository repository = new Repository(database);
 
-        if (categoryId == -1){
+        if (getCategoryId() == -1){
             Category category = new Category(getCategoryName());
 
             repository.insertCategory(category);
         }
 
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {

@@ -26,6 +26,7 @@ public class AddCategoryFragment extends Fragment {
     private AddCategoryFragmentViewModel viewModel;
     private int categoryId;
 
+
     public AddCategoryFragment() {
         // Required empty public constructor
     }
@@ -45,6 +46,7 @@ public class AddCategoryFragment extends Fragment {
 
     private void init(View view){
         viewModel = ViewModelProviders.of(getActivity()).get(AddCategoryFragmentViewModel.class);
+        viewModel.setCategoryId(this.categoryId);
 
         txtCategory = (EditText) view.findViewById(R.id.txtCategory);
         btnAddCategory = (Button) view.findViewById(R.id.btnAddCategory);
