@@ -56,12 +56,6 @@ public class SingleTask extends AppCompatActivity {
         adapter = new SingleTaskViewPagerAdapter(getSupportFragmentManager());
         viewPagerSingleTask.setAdapter(adapter);
 
-        observeTasks();
-
-    }
-
-    private void observeTasks(){
-
         viewModel.getListOfTask().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks){
@@ -70,5 +64,6 @@ public class SingleTask extends AppCompatActivity {
                 viewPagerSingleTask.setOffscreenPageLimit(viewModel.getListOfTask().getValue().size());
             }
         });
+
     }
 }
