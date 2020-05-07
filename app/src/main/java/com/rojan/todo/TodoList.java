@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +19,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.rojan.todo.adapter.TodoListAdapter;
+import com.rojan.todo.viewModel.TodoListViewModel;
 
 public class TodoList extends AppCompatActivity {
+
+    private TodoListViewModel viewModel;
 
     public static Intent makeIntent(Context context){
         return (new Intent(context, TodoList.class));
@@ -28,6 +33,7 @@ public class TodoList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+        viewModel = ViewModelProviders.of(this).get(TodoListViewModel.class);
         if(savedInstanceState == null){
             loadFragment();
         }
@@ -54,23 +60,16 @@ public class TodoList extends AppCompatActivity {
                 break;
                 
              case R.id.deleteAll:
-                 deleteAll();
+                 viewModel.deleteAll();
                  break;
                  
              case R.id.deleteCompleted:
-                 deleteCompleted();
+                 viewModel.deleteCompleted(true);
 
              default:
                  System.out.println("default");
                  break;
          }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void deleteCompleted() {
-    }
-
-    private void deleteAll(){
-        
     }
 }

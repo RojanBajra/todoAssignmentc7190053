@@ -1,6 +1,7 @@
 package com.rojan.todo.viewModel;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,9 +17,16 @@ public class TodoListViewModel extends AndroidViewModel {
     public TodoListViewModel(@NonNull Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
-        Repository repository = new Repository(database);
+        repository = new Repository(database);
     }
 
     public void deleteAll(){
+        repository.deleteAllTask();
+        Toast.makeText(getApplication(), "All tasks deleted.", Toast.LENGTH_LONG).show();
+    }
+
+    public void deleteCompleted(boolean value){
+        repository.deleteAllCompletedTask(value);
+        Toast.makeText(getApplication(), "All completed tasks deleted.", Toast.LENGTH_LONG).show();
     }
 }
