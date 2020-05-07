@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/stats_for_todo_list_background"
                 android:text="Edit"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
