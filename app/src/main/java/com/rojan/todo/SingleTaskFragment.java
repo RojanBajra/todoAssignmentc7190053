@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
+import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
@@ -45,11 +46,14 @@ public class SingleTaskFragment extends Fragment {
     public static int currnetPage = -1;
 
     private Task taskData;
+    private Category listCategoryData;
     private int taskId;
     private int pageNumber;
     private LiveData<Task> taskDataSingle;
-    private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted;
+    private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted, lblCategory;
     private Button btnEdit, btnDelete;
+
+    private LiveData<Category> listCategory;
 
     public static Fragment getInstance(int taskId, int pageNumber) {
         System.out.println("i am running delete get instance");
@@ -81,7 +85,7 @@ public class SingleTaskFragment extends Fragment {
             pageNumber = (int) args.getInt(PAGE_NUMBER);
 //            System.out.println(" now yeta k cha " + taskData.getTaskName());
             AppDatabase database = AppDatabase.getInstance(getActivity());
-            Repository repository = new Repository(database);
+            final Repository repository = new Repository(database);
             taskDataSingle = repository.loadTaskById(taskId);
             System.out.println("yo calling cha ta? ");
             taskDataSingle.observe(getActivity(), new Observer<Task>() {
@@ -89,9 +93,20 @@ public class SingleTaskFragment extends Fragment {
                 public void onChanged(Task task) {
                     taskDataSingle.removeObserver(this);
                     taskData = task;
-                    setValues();
+                    listCategory = repository.loadEachCategoryById(taskData.getCategoryId());
+                    listCategory.observe(getActivity(), new Observer<Category>() {
+                        @Override
+                        public void onChanged(Category category) {
+                            listCategory.removeObserver(this);
+                            listCategoryData = category;
+                            setValues();
+                        }
+                    });
+
+
                 }
             });
+
 
         }
 //        setValues();
@@ -118,6 +133,7 @@ public class SingleTaskFragment extends Fragment {
         lblCreatedOn = (TextView) view.findViewById(R.id.lblCreatedOn);
         lblUpdatedOn = (TextView) view.findViewById(R.id.lblUpdatedOn);
         lblCompleted = (TextView) view.findViewById(R.id.lblCompleted);
+        lblCategory = (TextView) view.findViewById(R.id.lblCategory);
         btnEdit = (Button) view.findViewById(R.id.btnEdit);
         btnDelete = (Button) view.findViewById(R.id.btnDelete);
 
@@ -149,6 +165,13 @@ public class SingleTaskFragment extends Fragment {
         lblPriority.setText(getPriorityValue(taskData.getPriority()));
         lblCompleted.setText(taskData.isCompleted() ? "complete" : "incomplete");
         lblCompleted.setTextColor(taskData.isCompleted() ? ContextCompat.getColor(getActivity(), R.color.colorGreen) : ContextCompat.getColor(getActivity(), R.color.colorRed));
+        lblCategory.setText("Category: " + listCategoryData.getCategoryName());
+//        lblCategory.setText("" + taskData.getCategoryId());
+    }
+
+    private String retrieveCategory(int categoryId){
+
+        return "";
     }
 
     private void btnEditClicked() {

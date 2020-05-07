@@ -103,7 +103,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     getValTime(),
                     false,
                     getValPriority(),
-                    0,
+                    1,
                     date,
                     date
             );
@@ -117,7 +117,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     getValTime(),
                     false,
                     getValPriority(),
-                    0,
+                    1,
                     getTaskToEdit().getValue().getCreatedOn(),
                     date
             );
