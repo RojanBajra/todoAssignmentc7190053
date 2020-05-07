@@ -53,6 +53,10 @@ public class TodoList extends AppCompatActivity {
                  startActivity(ListCategory.makeIntent(this));
                  break;
 
+             case R.id.menuAddCategroy:
+                startActivity(AddCategory.makeIntent(this, -1));
+                break;
+
              default:
                  System.out.println("default");
                  break;

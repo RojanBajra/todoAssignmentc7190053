@@ -39,6 +39,7 @@ public class AddCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        System.out.println("this is calling add category fragment");
         View view = inflater.inflate(R.layout.fragment_add_category, container, false);
         init(view);
         return view;
