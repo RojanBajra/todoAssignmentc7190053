@@ -20,13 +20,13 @@ public class ListCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_category);
         if (savedInstanceState == null){
-            loadFragment(-1);
+            loadFragment();
         }
     }
 
-    private void loadFragment(int taskId){
+    private void loadFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment addTaskFragment = new TodoListFragment();
-        fragmentManager.beginTransaction().add(R.id.listTodo, addTaskFragment).commit();
+        Fragment addTaskFragment = new ListCategoryFragment();
+        fragmentManager.beginTransaction().add(R.id.frameContainer, addTaskFragment).commit();
     }
 }
