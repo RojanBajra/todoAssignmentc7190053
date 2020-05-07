@@ -101,6 +101,25 @@
                 app:layout_constraintTop_toTopOf="@id/txtTaskDate" />
 
             <TextView
+                android:id="@+id/lblCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Category"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnDatePicker" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listCategory"
+                app:layout_constraintTop_toBottomOf="@id/lblCategory"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
                 android:id="@+id/lblTaskTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +128,7 @@
                 android:textColor="@color/colorBlack"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTaskDate" />
+                app:layout_constraintTop_toBottomOf="@id/listCategory" />
 
             <EditText
                 android:id="@+id/txtTaskTime"
