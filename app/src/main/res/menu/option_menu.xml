@@ -5,10 +5,6 @@
         android:title="Add Category"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/menuListCategroy"
-        android:title="List Category"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/deleteAll"
         android:title="Delete All"
         app:showAsAction="never"/>

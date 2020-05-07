@@ -49,18 +49,28 @@ public class TodoList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
          switch (item.getItemId()){
-             case R.id.menuListCategroy:
-                 startActivity(ListCategory.makeIntent(this));
-                 break;
-
              case R.id.menuAddCategroy:
                 startActivity(AddCategory.makeIntent(this, -1));
                 break;
+                
+             case R.id.deleteAll:
+                 deleteAll();
+                 break;
+                 
+             case R.id.deleteCompleted:
+                 deleteCompleted();
 
              default:
                  System.out.println("default");
                  break;
          }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteCompleted() {
+    }
+
+    private void deleteAll(){
+        
     }
 }
