@@ -18,17 +18,23 @@ import com.rojan.todo.model.Task;
 import java.util.List;
 
 public class TodoListFragmentViewModel extends AndroidViewModel {
+
     private LiveData<List<Task>> listOfTask;
+    private Repository repository;
 
     public TodoListFragmentViewModel(@NonNull Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
-        Repository repository = new Repository(database);
+        repository = new Repository(database);
         listOfTask = (repository.loadAllTask());
     }
 
     public LiveData<List<Task>> getListOfTask() {
         return listOfTask;
+    }
+
+    public void completeTask(boolean completedValue, int taskId){
+        repository.completeTask(completedValue, taskId);
     }
 
 }

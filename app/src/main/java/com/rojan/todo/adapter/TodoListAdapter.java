@@ -25,15 +25,17 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<Task> listOfData;
     Context context;
     OnTaskClickListener onTaskClickListener;
+    OnLongPressTaskClickListener onLongPressTaskClickListener;
 
     public void setData(List<Task> listOfData) {
         this.listOfData = listOfData;
         notifyDataSetChanged();
     }
 
-    public TodoListAdapter(Context context, OnTaskClickListener onTaskClickListener) {
+    public TodoListAdapter(Context context, OnTaskClickListener onTaskClickListener, OnLongPressTaskClickListener onLongPressTaskClickListener) {
         this.onTaskClickListener = onTaskClickListener;
         this.context = context;
+        this.onLongPressTaskClickListener = onLongPressTaskClickListener;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.todo_list, parent, false);
-                holder = new TodoListViewHolder(view, onTaskClickListener);
+                holder = new TodoListViewHolder(view, onTaskClickListener, onLongPressTaskClickListener);
                 break;
         }
         return holder;
@@ -74,6 +76,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((TodoListViewHolder) holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
             ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + DateFormatUtils.getInstance().dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
             ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
+            ((TodoListViewHolder) holder).setCompletedValue(listOfData.get(position - 1).isCompleted());
+            ((TodoListViewHolder) holder).setTaskId(listOfData.get(position - 1).getTaskId());
+            ((TodoListViewHolder) holder).setTaskName(listOfData.get(position - 1).getTaskName());
         } else if (holder instanceof StatViewHolder) {
             ((StatViewHolder) holder).lblToday.setText(generateTotalToday());
             ((StatViewHolder) holder).lblAll.setText(Integer.toString(listOfData.size()));
@@ -111,15 +116,19 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return "" + counter;
     }
 
-    public class TodoListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class TodoListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView lblTitle;
         private TextView lblDescription;
         private TextView lblDueDate;
         private ConstraintLayout container;
         private OnTaskClickListener onTaskClickListener;
+        private OnLongPressTaskClickListener onLongPressTaskClickListener;
+        private boolean completedValue;
+        private int taskId;
+        private String taskName;
 
-        public TodoListViewHolder(@NonNull View itemView, OnTaskClickListener onTaskClickListener) {
+        public TodoListViewHolder(@NonNull View itemView, OnTaskClickListener onTaskClickListener, OnLongPressTaskClickListener onLongPressTaskClickListener) {
             super(itemView);
 
             // initializing the variables
@@ -129,7 +138,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             container = (ConstraintLayout) itemView.findViewById(R.id.constraintContainer);
 
             this.onTaskClickListener = onTaskClickListener;
+            this.onLongPressTaskClickListener = onLongPressTaskClickListener;
+
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -137,6 +149,24 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             onTaskClickListener.onTaskClicked(getAdapterPosition());
         }
 
+        @Override
+        public boolean onLongClick(View view) {
+            onLongPressTaskClickListener.onLongPressed(taskId, completedValue, taskName);
+            return true;
+        }
+
+        public void setTaskName(String taskName) {
+            this.taskName = taskName;
+        }
+
+        public void setTaskId(int taskId) {
+            this.taskId = taskId;
+        }
+
+
+        public void setCompletedValue(boolean completedValue) {
+            this.completedValue = completedValue;
+        }
     }
 
     public class StatViewHolder extends RecyclerView.ViewHolder {
@@ -154,5 +184,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface OnTaskClickListener {
         public void onTaskClicked(int position);
+    }
+
+    public interface OnLongPressTaskClickListener{
+        public void onLongPressed(int taskId, boolean completedValue, String taskName);
     }
 }

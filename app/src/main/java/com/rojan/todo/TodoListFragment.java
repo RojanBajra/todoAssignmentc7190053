@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rojan.todo.adapter.TodoListAdapter;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodoListFragment extends Fragment implements TodoListAdapter.OnTaskClickListener {
+public class TodoListFragment extends Fragment implements TodoListAdapter.OnTaskClickListener, TodoListAdapter.OnLongPressTaskClickListener {
 
     private RecyclerView listTodo;
     private FloatingActionButton floatingActionButton;
@@ -53,6 +54,13 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         startActivity(SingleTask.makeIntent(getActivity(), position - 1));
     }
 
+    @Override
+    public void onLongPressed(int taskId, boolean completedValue, String taskName) {
+        viewModel.completeTask(!completedValue, taskId);
+        String showMsg = (completedValue ? "Incomplete" : "Complete");
+        Toast.makeText(getContext(),  "Task " + taskName+ " marked " + showMsg, Toast.LENGTH_LONG).show();
+    }
+
     private void init(View view) {
         listTodo = (RecyclerView) view.findViewById(R.id.listTodo);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabAddTask);
@@ -69,7 +77,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
 
     private void setupAdapter(){
         listTodo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new TodoListAdapter(getActivity(), this);
+        adapter = new TodoListAdapter(getActivity(), this, this);
         listTodo.setAdapter(adapter);
     }
 
