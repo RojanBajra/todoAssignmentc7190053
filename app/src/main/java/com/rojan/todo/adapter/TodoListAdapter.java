@@ -73,6 +73,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TodoListViewHolder) {
             ((TodoListViewHolder) holder).lblTitle.setText(listOfData.get(position - 1).getTaskName());
+            ((TodoListViewHolder) holder).lblTitle.setTextColor(ContextCompat.getColor(context, checkColor(position - 1)));
             ((TodoListViewHolder) holder).lblDescription.setText(listOfData.get(position - 1).getTaskDescription());
             ((TodoListViewHolder) holder).lblDueDate.setText("Due date: " + DateFormatUtils.getInstance().dateConverter(listOfData.get(position - 1).getTaskDate(), "MM-dd-yyyy"));
             ((TodoListViewHolder) holder).container.setBackground(settingBackground(position - 1));
@@ -89,6 +90,14 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return listOfData == null ? 0 : listOfData.size() + 1;
+    }
+
+    private int checkColor(int position){
+        if (listOfData.get(position).isCompleted()){
+            return R.color.colorGreen;
+        }else{
+            return R.color.colorBlack;
+        }
     }
 
     private Drawable settingBackground(int position) {
