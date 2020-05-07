@@ -36,7 +36,7 @@ public class Repository {
         });
     }
 
-    public void deleteTheTask(final int categoryId){
+    public void deleteTheTaskByCategoryId(final int categoryId){
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
