@@ -55,14 +55,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     private AddTaskFragmentViewModel viewModel;
     private int taskId;
 
-//    public static Fragment getInstance(int taskId){
-//        Bundle args = new Bundle();
-//        args.putInt(EDIT_PAGE_KEY, taskId);
-//        AddTaskFragment fragment = new AddTaskFragment();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     public AddTaskFragment(){
 
     }
@@ -119,13 +111,10 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         viewModel.getListCategory().observe(getActivity(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
-//                setEditableData(task);
                 setSpinnerAdapter(categories);
             }
         });
 
-
-//        System.out.println("view model ko data " + viewModel.getValTitle());
         setDefaultText();
         return view;
     }
@@ -184,11 +173,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
         spinner = view.findViewById(R.id.listCategory);
 
-
-        //viewModel.init();
-
-
-
         addActionListeners();
     }
 
@@ -228,23 +212,13 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     }
 
     private void setCategory(Task task){
-//        int count = 0;
-//        for (Category category: viewModel.getListCategory().getValue()) {
-//            if(category.getCategoryId() == task.getTaskId()){
-//                viewModel.setSpinnerValuePosition(count);
-//                break;
-//            }
-//            count++;
-//        }
         for (int i = 0; i < viewModel.getListCategory().getValue().size(); i++){
             System.out.println("checking task id " + task.getTaskId() + " task name " + task.getTaskName() + " and rotating id " + viewModel.getListCategory().getValue().get(i).getCategoryId() + " rotaing name " + viewModel.getListCategory().getValue().get(i).getCategoryName());
             if(viewModel.getListCategory().getValue().get(i).getCategoryId() == task.getCategoryId()){
-//                spinner.setSelection(3);
                 viewModel.setSpinnerValuePosition(i);
                 break;
             }
         }
-//        spinner.setSelection(count);
     }
 
     private void setPriority(Task task){
@@ -310,8 +284,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         }else{
             Toast.makeText(getContext(), "Add a category first in Add category page", Toast.LENGTH_LONG).show();
         }
-
-
 
     }
 
