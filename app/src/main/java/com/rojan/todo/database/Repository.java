@@ -36,6 +36,15 @@ public class Repository {
         });
     }
 
+    public void deleteTheTask(final int categoryId){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDaoRepository.deleteTaskRelatedToCategory(categoryId);
+            }
+        });
+    }
+
     public void updateOverallTask(final Task task){
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override

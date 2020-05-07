@@ -87,6 +87,7 @@ public class AddCategoryFragment extends Fragment {
                 System.out.println("swipe callign " + viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName());
                 AppDatabase database = AppDatabase.getInstance(getActivity());
                 Repository repository = new Repository(database);
+                repository.
                 repository.deleteTheCategory(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(recyclerView);
