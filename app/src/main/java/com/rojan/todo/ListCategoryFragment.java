@@ -3,6 +3,8 @@ package com.rojan.todo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rojan.todo.adapter.ListCategoryAdapter;
+import com.rojan.todo.viewModel.ListCategoryFragmentViewModel;
 
 
 /**
@@ -20,6 +23,7 @@ public class ListCategoryFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListCategoryAdapter adapter;
+    private ListCategoryFragmentViewModel viewModel;
 
     public ListCategoryFragment() {
         // Required empty public constructor
@@ -39,6 +43,11 @@ public class ListCategoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.listCategory);
 
         setupAdapter();
+        setupViewModel();
+    }
+
+    private void setupViewModel(){
+        viewModel = ViewModelProviders.of(this).get(ListCategoryFragmentViewModel.class);
     }
 
     private void setupAdapter(){
