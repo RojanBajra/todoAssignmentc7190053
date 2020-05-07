@@ -19,7 +19,7 @@ public class ListCategory extends AppCompatActivity {
 
     private void loadFragment(int taskId){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment addTaskFragment = new AddTaskFragment(taskId);
-        fragmentManager.beginTransaction().add(R.id.frameContainer, addTaskFragment).commit();
+        Fragment addTaskFragment = new TodoListFragment();
+        fragmentManager.beginTransaction().add(R.id.listTodo, addTaskFragment).commit();
     }
 }
