@@ -104,8 +104,6 @@ public class SingleTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        System.out.println("i am running delete constructor");
-        System.out.println("third call vaira cha ta");
         View view = inflater.inflate(R.layout.fragment_single_task, container, false);
         init(view);
         return view;

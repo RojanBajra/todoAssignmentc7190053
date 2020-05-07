@@ -46,7 +46,6 @@ public class SingleTask extends AppCompatActivity {
     }
 
     private void init() {
-        System.out.println("this is running page");
         viewModel = ViewModelProviders.of(this).get(SingleTaskViewModel.class);
         Intent intent = getIntent();
 

@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.rojan.todo.adapter.TodoListAdapter;
 import com.rojan.todo.viewModel.TodoListViewModel;
@@ -60,10 +61,12 @@ public class TodoList extends AppCompatActivity {
                 break;
                 
              case R.id.deleteAll:
+                 Toast.makeText(this, "All tasks deleted.", Toast.LENGTH_LONG).show();
                  viewModel.deleteAll();
                  break;
                  
              case R.id.deleteCompleted:
+                 Toast.makeText(this, "All completed tasks deleted.", Toast.LENGTH_LONG).show();
                  viewModel.deleteCompleted(true);
 
              default:

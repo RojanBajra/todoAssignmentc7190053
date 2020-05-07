@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         init(view);
         setupAdapter();
+        setupSwipeAction();
         return view;
     }
 
@@ -59,6 +61,22 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         viewModel.completeTask(!completedValue, taskId);
         String showMsg = (completedValue ? "Incomplete" : "Complete");
         Toast.makeText(getContext(),  "Task " + taskName+ " marked " + showMsg, Toast.LENGTH_LONG).show();
+    }
+
+    private void setupSwipeAction() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Task task = ((TodoListAdapter.TodoListViewHolder) viewHolder).getTask();
+                Toast.makeText(getContext(), "Task " + task.getTaskName() + " deleted.", Toast.LENGTH_LONG).show();
+                viewModel.deleteTask(task);
+            }
+        }).attachToRecyclerView(listTodo);
     }
 
     private void init(View view) {

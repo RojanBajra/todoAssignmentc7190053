@@ -32,7 +32,6 @@ public class AddTask extends AppCompatActivity {
 
         taskId = getIntent().getIntExtra(TASK_ID, DEFAULT_TASK_ID);
         if(taskId != DEFAULT_TASK_ID){
-            System.out.println("This is printing " + taskId);
             int taskId = getIntent().getIntExtra(TASK_ID, -1);
             if (taskId != -1 && savedInstanceState == null){
                 loadFragment(taskId);

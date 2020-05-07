@@ -80,6 +80,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((TodoListViewHolder) holder).setCompletedValue(listOfData.get(position - 1).isCompleted());
             ((TodoListViewHolder) holder).setTaskId(listOfData.get(position - 1).getTaskId());
             ((TodoListViewHolder) holder).setTaskName(listOfData.get(position - 1).getTaskName());
+            ((TodoListViewHolder) holder).setTask(listOfData.get(position - 1));
         } else if (holder instanceof StatViewHolder) {
             ((StatViewHolder) holder).lblToday.setText(generateTotalToday());
             ((StatViewHolder) holder).lblAll.setText(Integer.toString(listOfData.size()));
@@ -136,6 +137,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private boolean completedValue;
         private int taskId;
         private String taskName;
+        private Task task;
 
         public TodoListViewHolder(@NonNull View itemView, OnTaskClickListener onTaskClickListener, OnLongPressTaskClickListener onLongPressTaskClickListener) {
             super(itemView);
@@ -162,6 +164,14 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public boolean onLongClick(View view) {
             onLongPressTaskClickListener.onLongPressed(taskId, completedValue, taskName);
             return true;
+        }
+
+        public Task getTask() {
+            return task;
+        }
+
+        public void setTask(Task task) {
+            this.task = task;
         }
 
         public void setTaskName(String taskName) {

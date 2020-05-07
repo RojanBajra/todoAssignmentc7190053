@@ -67,7 +67,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     public void onStart() {
         super.onStart();
         Bundle args = getArguments();
-        System.out.println("while rotating on start " + args);
         if (args != null) {
             taskId = (args.getInt(EDIT_PAGE_KEY));
         }
@@ -84,13 +83,10 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         init(view);
 
         // view model
-        System.out.println("while rotating " + taskId);
         if (taskId == DEFAULT_TASK_ID){
-            System.out.println("while rotating task equal");
             viewModel = ViewModelProviders.of(this).get(AddTaskFragmentViewModel.class);
             taskId = (taskId);
         }else{
-            System.out.println("while rotating task not equal");
             AddTaskFragmentViewModelFactory factory = new AddTaskFragmentViewModelFactory(getActivity().getApplication(), taskId);
             viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
             viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
@@ -137,7 +133,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         Calendar calendar = Calendar.getInstance();
-        System.out.println("is i and i1 printing ? i " + i + " and i1 " + i1);
         calendar.set(i, i1);
         Date c = Calendar.getInstance().getTime();
         calendar.set(c.getYear(), c.getMonth(), c.getDate(), i, i1);
@@ -191,7 +186,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("chosen one " + i);
                 viewModel.setSpinnerValuePosition(i);
             }
 
@@ -213,7 +207,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void setCategory(Task task){
         for (int i = 0; i < viewModel.getListCategory().getValue().size(); i++){
-            System.out.println("checking task id " + task.getTaskId() + " task name " + task.getTaskName() + " and rotating id " + viewModel.getListCategory().getValue().get(i).getCategoryId() + " rotaing name " + viewModel.getListCategory().getValue().get(i).getCategoryName());
             if(viewModel.getListCategory().getValue().get(i).getCategoryId() == task.getCategoryId()){
                 viewModel.setSpinnerValuePosition(i);
                 break;
@@ -256,7 +249,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 btnAddTaskClick();
             }
         });
-
     }
 
     private void btnAddTaskClick() {
@@ -270,15 +262,14 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 viewModel.setValDescription(txtDescription.getText().toString());
                 viewModel.setValPriority(viewModel.retrievePriorityValue(radioGroup));
                 if (taskId == DEFAULT_TASK_ID){
-
                     viewModel.saveIntoDatabase(true);
                     getActivity().finish();
                 }else{
-                    System.out.println("task id sent " + this.taskId);
                     viewModel.saveIntoDatabase(false);
                     getActivity().finish();
                 }
             } else {
+                Toast.makeText(getContext(), "Fill all required fields.", Toast.LENGTH_LONG).show();
                 checkEmptyTextField();
             }
         }else{

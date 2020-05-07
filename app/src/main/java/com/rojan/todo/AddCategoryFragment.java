@@ -54,7 +54,6 @@ public class AddCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        System.out.println("this is calling add category fragment");
         View view = inflater.inflate(R.layout.fragment_add_category, container, false);
         init(view);
         return view;
@@ -84,7 +83,6 @@ public class AddCategoryFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                System.out.println("swipe callign " + viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName());
                 AppDatabase database = AppDatabase.getInstance(getActivity());
                 Repository repository = new Repository(database);
                 String catName = viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName();

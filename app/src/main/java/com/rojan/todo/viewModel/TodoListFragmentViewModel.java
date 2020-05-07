@@ -37,4 +37,8 @@ public class TodoListFragmentViewModel extends AndroidViewModel {
         repository.completeTask(completedValue, taskId);
     }
 
+    public void deleteTask(Task task){
+        repository.deleteTheTask(task);
+    }
+
 }
