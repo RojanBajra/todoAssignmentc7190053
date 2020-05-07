@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
+import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
 
 import java.text.DateFormat;
 
@@ -41,6 +44,7 @@ public class SingleTaskFragment extends Fragment {
     private LiveData<Task> taskDataSingle;
     private TextView lblTitle, lblDescription, lblDate, lblTime, lblPriority, lblCreatedOn, lblUpdatedOn, lblCompleted, lblCategory;
     private Button btnEdit, btnDelete;
+    private SingleTaskFragmentViewModel viewModel;
 
     private LiveData<Category> listCategory;
 
@@ -64,19 +68,19 @@ public class SingleTaskFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("i am running delete onstart");
         Bundle args = getArguments();
-        System.out.println("yo vayo ta ?");
+
+        viewModel = ViewModelProviders.of(getActivity()).get(SingleTaskFragmentViewModel.class);
 
         if (args != null) {
-//            taskData = (Task) args.getSerializable(SERIALIZABLE_VALUE);
             taskId = (int) args.getInt(TASK_ID);
             pageNumber = (int) args.getInt(PAGE_NUMBER);
-//            System.out.println(" now yeta k cha " + taskData.getTaskName());
+
             AppDatabase database = AppDatabase.getInstance(getActivity());
             final Repository repository = new Repository(database);
+
             taskDataSingle = repository.loadTaskById(taskId);
-            System.out.println("yo calling cha ta? ");
+
             taskDataSingle.observe(getActivity(), new Observer<Task>() {
                 @Override
                 public void onChanged(Task task) {
@@ -91,14 +95,9 @@ public class SingleTaskFragment extends Fragment {
                             setValues();
                         }
                     });
-
-
                 }
             });
-
-
         }
-//        setValues();
     }
 
     @Override
@@ -151,16 +150,11 @@ public class SingleTaskFragment extends Fragment {
         lblUpdatedOn.setText("Updated on: " + DateFormatUtils.getInstance().dateConverter(taskData.getUpdatedOn(), "MM-dd-yyyy"));
         lblDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(taskData.getTaskDate()));
         lblTime.setText(DateFormatUtils.getInstance().dateConverter(taskData.getTaskTime(), "HH:mm"));
-        lblPriority.setText(getPriorityValue(taskData.getPriority()));
+        lblPriority.setText(viewModel.getPriorityValue(taskData.getPriority(), lblPriority));
         lblCompleted.setText(taskData.isCompleted() ? "complete" : "incomplete");
         lblCompleted.setTextColor(taskData.isCompleted() ? ContextCompat.getColor(getActivity(), R.color.colorGreen) : ContextCompat.getColor(getActivity(), R.color.colorRed));
         lblCategory.setText("Category: " + listCategoryData.getCategoryName());
 //        lblCategory.setText("" + taskData.getCategoryId());
-    }
-
-    private String retrieveCategory(int categoryId){
-
-        return "";
     }
 
     private void btnEditClicked() {
@@ -169,23 +163,7 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void btnDeleteClicked() {
-        AppDatabase database = AppDatabase.getInstance(getActivity());
-        Repository repository = new Repository(database);
-        repository.deleteTheTask(taskData);
+        viewModel.deleteTask(taskData);
         getActivity().finish();
-    }
-
-    private String getPriorityValue(int priorityNumber) {
-        switch (priorityNumber) {
-            case 0:
-                lblPriority.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRed));
-                return "HIGH";
-            case 1:
-                lblPriority.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorOrange));
-                return "MEDIUM";
-            default:
-                lblPriority.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorYellowForText));
-                return "LOW";
-        }
     }
 }
