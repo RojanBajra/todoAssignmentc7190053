@@ -18,9 +18,6 @@ public interface CategoryDao {
     @Query("select * from category order by categoryId desc")
     LiveData<List<Category>> loadAllTheCAtegory();
 
-//    @Query("select * from category order by categoryId desc")
-//    LiveData<List<Category>> loadAllTheCAtegoryById();
-
     @Query("select * from category where categoryId = :categoryId")
     LiveData<Category> loadEachCategoryById(int categoryId);
 
