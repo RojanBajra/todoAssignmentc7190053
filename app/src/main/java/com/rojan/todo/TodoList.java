@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -43,5 +44,19 @@ public class TodoList extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+         switch (item.getItemId()){
+             case R.id.menuListCategroy:
+                 startActivity(ListCategory.makeIntent(this));
+                 break;
+
+             default:
+                 System.out.println("default");
+                 break;
+         }
+        return super.onOptionsItemSelected(item);
     }
 }
