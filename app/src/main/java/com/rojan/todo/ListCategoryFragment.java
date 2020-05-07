@@ -44,7 +44,7 @@ public class ListCategoryFragment extends Fragment {
     }
 
     private void init(View view){
-        recyclerView = view.findViewById(R.id.listCategory);
+        recyclerView = (RecyclerView) view.findViewById(R.id.listCategory);
 
         setupAdapter();
         setupViewModel();
