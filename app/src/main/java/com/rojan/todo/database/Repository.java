@@ -68,9 +68,9 @@ public class Repository {
         return categoryDaoRepository.loadAllTheCAtegory();
     }
 
-    public LiveData<List<Category>> loadAllCategoryById() {
-        return categoryDaoRepository.loadAllTheCAtegoryById();
-    }
+//    public LiveData<List<Category>> loadAllCategoryById() {
+//        return categoryDaoRepository.loadAllTheCAtegoryById();
+//    }
 
     public LiveData<Category> loadEachCategoryById(int categoryId) {
         return categoryDaoRepository.loadEachCategoryById(categoryId);

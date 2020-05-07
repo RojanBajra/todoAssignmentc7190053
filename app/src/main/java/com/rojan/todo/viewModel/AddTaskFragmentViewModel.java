@@ -22,7 +22,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
 
     private String valTitle, valDescription;
     private Date valDate, valTime;
-    private String lblValTitle, lblValDescription, lblValDate, lblValPriority;
+    private String lblValTitle, lblValDescription, lblValDate, lblValPriority, lblValCategory;
     private int spinnerValuePosition;
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
@@ -103,7 +103,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     getValTime(),
                     false,
                     getValPriority(),
-                    1,
+                    getListCategory().getValue().get(getSpinnerValuePosition()).getCategoryId(),
                     date,
                     date
             );
@@ -117,7 +117,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
                     getValTime(),
                     false,
                     getValPriority(),
-                    1,
+                    getListCategory().getValue().get(getSpinnerValuePosition()).getCategoryId(),
                     getTaskToEdit().getValue().getCreatedOn(),
                     date
             );
@@ -144,6 +144,14 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     @Override
     public String toString() {
         return "Title: " + valTitle + "\nDescription: " + valDescription + "\nDate: " + valDate + "\nTime: " + valTime + "\nPriority" + valPriority;
+    }
+
+    public String getLblValCategory() {
+        return lblValCategory;
+    }
+
+    public void setLblValCategory(String lblValCategory) {
+        this.lblValCategory = lblValCategory;
     }
 
     public int getSpinnerValuePosition() {

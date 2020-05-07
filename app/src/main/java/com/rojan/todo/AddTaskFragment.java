@@ -102,15 +102,23 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             viewModel = ViewModelProviders.of(getActivity(), factory).get(AddTaskFragmentViewModel.class);
             viewModel.getTaskToEdit().observe(getActivity(), new Observer<Task>() {
                 @Override
-                public void onChanged(Task task) {
+                public void onChanged(final Task task) {
                     viewModel.getTaskToEdit().removeObserver(this);
-                    setEditableData(task);
+
+                    viewModel.getListCategory().observe(getActivity(), new Observer<List<Category>>() {
+                        @Override
+                        public void onChanged(List<Category> categories) {
+                            setEditableData(task);
+                            setSpinnerAdapter(categories);
+                        }
+                    });
                 }
             });
         }
         viewModel.getListCategory().observe(getActivity(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
+//                setEditableData(task);
                 setSpinnerAdapter(categories);
             }
         });
@@ -198,6 +206,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("chosen one " + i);
                 viewModel.setSpinnerValuePosition(i);
             }
 
@@ -214,6 +223,27 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtTaskDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(task.getTaskDate()));
         txtTaskTime.setText(task.getTaskTime().getHours() + ":" + task.getTaskTime().getMinutes());
         setPriority(task);
+        setCategory(task);
+    }
+
+    private void setCategory(Task task){
+//        int count = 0;
+//        for (Category category: viewModel.getListCategory().getValue()) {
+//            if(category.getCategoryId() == task.getTaskId()){
+//                viewModel.setSpinnerValuePosition(count);
+//                break;
+//            }
+//            count++;
+//        }
+        for (int i = 0; i < viewModel.getListCategory().getValue().size(); i++){
+            System.out.println("checking task id " + task.getTaskId() + " task name " + task.getTaskName() + " and rotating id " + viewModel.getListCategory().getValue().get(i).getCategoryId() + " rotaing name " + viewModel.getListCategory().getValue().get(i).getCategoryName());
+            if(viewModel.getListCategory().getValue().get(i).getCategoryId() == task.getCategoryId()){
+//                spinner.setSelection(3);
+                viewModel.setSpinnerValuePosition(i);
+                break;
+            }
+        }
+//        spinner.setSelection(count);
     }
 
     private void setPriority(Task task){
@@ -270,8 +300,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
             }else{
                 System.out.println("task id sent " + this.taskId);
                 viewModel.saveIntoDatabase(false);
-//                getActivity().finishAffinity();
-//                startActivity(TodoList.makeIntent(getActivity()));
                 getActivity().finish();
             }
         } else {

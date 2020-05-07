@@ -22,7 +22,7 @@ public class AddCategoryFragmentViewModel extends AndroidViewModel {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
         Repository repository = new Repository(database);
-        listCategory = repository.loadAllCategoryById();
+        listCategory = repository.loadAllCategory();
     }
 
     public void saveIntoDatabase(){
