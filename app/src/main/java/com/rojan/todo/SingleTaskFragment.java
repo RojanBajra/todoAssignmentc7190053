@@ -6,31 +6,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.rojan.todo.adapter.SingleTaskViewPagerAdapter;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
-import com.rojan.todo.viewModel.SingleTaskFragmentViewModel;
-import com.rojan.todo.viewModelFactory.SingleTaskFragmentViewModelFactory;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -180,13 +169,6 @@ public class SingleTaskFragment extends Fragment {
     }
 
     private void btnDeleteClicked() {
-        System.out.println("is this running delete");
-//        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppDatabase.getInstance(getActivity()).taskDao().deleteTask(taskData);
-//            }
-//        });
         AppDatabase database = AppDatabase.getInstance(getActivity());
         Repository repository = new Repository(database);
         repository.deleteTheTask(taskData);
