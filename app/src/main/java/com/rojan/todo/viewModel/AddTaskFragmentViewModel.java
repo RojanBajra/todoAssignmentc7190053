@@ -8,9 +8,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.rojan.todo.R;
-import com.rojan.todo.TodoList;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
+import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
 
@@ -23,10 +23,12 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     private String valTitle, valDescription;
     private Date valDate, valTime;
     private String lblValTitle, lblValDescription, lblValDate, lblValPriority;
+    private int spinnerValuePosition;
     private int lblTitleColor, lblDescriptionColor, lblDateColor, lblPriorityColor;
     private int valPriority;
     private Repository repository;
     private LiveData<Task> taskToEdit;
+    private LiveData<List<Category>> listCategory;
 //    private int taskId;
     private String btnName, topLblTitle;
 
@@ -38,10 +40,11 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         repository = new Repository(database);
 
         taskToEdit = repository.loadTaskById(taskId);
-        LiveData<List<Task>> d = repository.loadAllTask();
-        System.out.println("yo run huncha?");
+        listCategory = repository.loadAllCategory();
+
         btnName = "EDIT TASK";
         topLblTitle = "EDIT THE TASK";
+
         init();
         setDefaultLabelText();
     }
@@ -51,7 +54,9 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
 
         AppDatabase database = AppDatabase.getInstance(application);
         repository = new Repository(database);
-//        taskId = -1;
+
+        listCategory = repository.loadAllCategory();
+
         btnName = "ADD TASK";
         topLblTitle = "ADD A TODO TASK";
 
@@ -65,6 +70,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
         valDate = new Date();
         valTime = new Date();
         valPriority = 0;
+        spinnerValuePosition = 0;
     }
 
     public void setDefaultLabelText(){
@@ -138,6 +144,18 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
     @Override
     public String toString() {
         return "Title: " + valTitle + "\nDescription: " + valDescription + "\nDate: " + valDate + "\nTime: " + valTime + "\nPriority" + valPriority;
+    }
+
+    public int getSpinnerValuePosition() {
+        return spinnerValuePosition;
+    }
+
+    public void setSpinnerValuePosition(int spinnerValuePosition) {
+        this.spinnerValuePosition = spinnerValuePosition;
+    }
+
+    public LiveData<List<Category>> getListCategory() {
+        return listCategory;
     }
 
     public String getTopLblTitle() {

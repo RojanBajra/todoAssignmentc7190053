@@ -1,43 +1,38 @@
 package com.rojan.todo;
 
-import android.app.Activity;
-import android.app.AppComponentFactory;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.rojan.todo.database.AppDatabase;
+import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
-import com.rojan.todo.utils.DateFormatUtils;
 import com.rojan.todo.viewModel.AddTaskFragmentViewModel;
 import com.rojan.todo.viewModelFactory.AddTaskFragmentViewModelFactory;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -54,6 +49,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     private TextView lblTaskTitle, lblDescription, lblTaskDate, lblPriority, lblAddTaskTitle;
     private RadioButton radioButtonHigh, radioButtonLow, radioButtonMedium;
     private RadioGroup radioGroup;
+    private Spinner spinner;
 
     private AddTaskFragmentViewModel viewModel;
     private int taskId;
@@ -112,6 +108,13 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 }
             });
         }
+        viewModel.getListCategory().observe(getActivity(), new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                setSpinnerAdapter(categories);
+            }
+        });
+
 
 //        System.out.println("view model ko data " + viewModel.getValTitle());
         setDefaultText();
@@ -170,6 +173,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         btnTimePicker = view.findViewById(R.id.btnTimePicker);
         txtTaskTime = view.findViewById(R.id.txtTaskTime);
 
+        spinner = view.findViewById(R.id.listCategory);
 
 
         //viewModel.init();
@@ -177,6 +181,31 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
 
 
         addActionListeners();
+    }
+
+    private void setSpinnerAdapter(List<Category> categories){
+        List<String> listCategoryName = new ArrayList<>();
+        for (Category category: categories) {
+            listCategoryName.add(category.getCategoryName());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listCategoryName);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setSelection(viewModel.getSpinnerValuePosition());
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.setSpinnerValuePosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setEditableData(Task task){
