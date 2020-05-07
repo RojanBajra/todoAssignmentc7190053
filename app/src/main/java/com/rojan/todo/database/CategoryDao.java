@@ -18,6 +18,9 @@ public interface CategoryDao {
     @Query("select * from category order by categoryName")
     LiveData<List<Category>> loadAllTheCAtegory();
 
+    @Query("select * from category order by categoryId desc")
+    LiveData<List<Category>> loadAllTheCAtegoryById();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCategory(Category category);
 

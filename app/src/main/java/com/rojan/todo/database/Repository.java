@@ -68,4 +68,17 @@ public class Repository {
         return categoryDaoRepository.loadAllTheCAtegory();
     }
 
+    public LiveData<List<Category>> loadAllCategoryById() {
+        return categoryDaoRepository.loadAllTheCAtegoryById();
+    }
+
+    public void deleteTheCategory(final Category category){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryDaoRepository.deleteCategory(category);
+            }
+        });
+    }
+
 }
