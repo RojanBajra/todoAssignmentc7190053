@@ -87,8 +87,10 @@ public class AddCategoryFragment extends Fragment {
                 System.out.println("swipe callign " + viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName());
                 AppDatabase database = AppDatabase.getInstance(getActivity());
                 Repository repository = new Repository(database);
-                repository.
+                String catName = viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName();
+                repository.deleteTheTaskByCategoryId(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryId());
                 repository.deleteTheCategory(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()));
+                Toast.makeText(getContext(), "All the tasks have been deleted for " + catName, Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);
 

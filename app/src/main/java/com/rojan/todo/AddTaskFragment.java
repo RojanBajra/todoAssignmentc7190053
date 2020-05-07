@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
@@ -289,22 +290,27 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         setDefaultText();
 
         viewModel.setDefaultLabelText();
-        if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
-            viewModel.setValTitle(txtTitle.getText().toString());
-            viewModel.setValDescription(txtDescription.getText().toString());
-            viewModel.setValPriority(viewModel.retrievePriorityValue(radioGroup));
-            if (taskId == DEFAULT_TASK_ID){
+        if(viewModel.getListCategory().getValue().size() != 0){
+            if (!txtTitle.getText().toString().isEmpty() && !txtDescription.getText().toString().isEmpty() && !txtTaskDate.getText().toString().isEmpty()) {
+                viewModel.setValTitle(txtTitle.getText().toString());
+                viewModel.setValDescription(txtDescription.getText().toString());
+                viewModel.setValPriority(viewModel.retrievePriorityValue(radioGroup));
+                if (taskId == DEFAULT_TASK_ID){
 
-                viewModel.saveIntoDatabase(true);
-                getActivity().finish();
-            }else{
-                System.out.println("task id sent " + this.taskId);
-                viewModel.saveIntoDatabase(false);
-                getActivity().finish();
+                    viewModel.saveIntoDatabase(true);
+                    getActivity().finish();
+                }else{
+                    System.out.println("task id sent " + this.taskId);
+                    viewModel.saveIntoDatabase(false);
+                    getActivity().finish();
+                }
+            } else {
+                checkEmptyTextField();
             }
-        } else {
-            checkEmptyTextField();
+        }else{
+            Toast.makeText(getContext(), "Add a category first in Add category page", Toast.LENGTH_LONG).show();
         }
+
 
 
     }
