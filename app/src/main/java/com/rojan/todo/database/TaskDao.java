@@ -33,4 +33,10 @@ public interface TaskDao {
     @Query("delete from task where categoryId = :categoryId")
     void deleteTaskRelatedToCategory(int categoryId);
 
+    @Query("delete from task")
+    void deleteAllTask();
+
+    @Query("delete from task where isCompleted = :value")
+    void deleteAllCompleted(boolean value);
+
 }

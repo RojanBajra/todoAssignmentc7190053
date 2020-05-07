@@ -63,6 +63,26 @@ public class Repository {
         return taskDaoRepository.loadTaskById(taskId);
     }
 
+    public void deleteAllTask(){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDaoRepository.deleteAllTask();
+            }
+        });
+    }
+
+    public void deleteAllCompletedTask(final boolean value){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDaoRepository.deleteAllCompleted(value);
+            }
+        });
+    }
+
+
+
     // Category Dao queries
     public void insertCategory(final Category category){
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
