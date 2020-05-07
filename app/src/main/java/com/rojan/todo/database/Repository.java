@@ -81,6 +81,15 @@ public class Repository {
         });
     }
 
+    public void completeTask(final boolean completedValue, final int taskId){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDaoRepository.completeTask(completedValue, taskId);
+            }
+        });
+    }
+
 
 
     // Category Dao queries

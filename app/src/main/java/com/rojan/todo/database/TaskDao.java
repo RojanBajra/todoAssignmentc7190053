@@ -39,4 +39,7 @@ public interface TaskDao {
     @Query("delete from task where isCompleted = :value")
     void deleteAllCompleted(boolean value);
 
+    @Query("update task set isCompleted = :completedValue where taskId = :taskId")
+    void completeTask(boolean completedValue, int taskId);
+
 }
