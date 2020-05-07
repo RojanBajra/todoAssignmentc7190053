@@ -10,7 +10,7 @@
         android:id="@+id/lblCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title of the categoryd"
+        android:text="Title of the category"
         android:padding="8dp"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
