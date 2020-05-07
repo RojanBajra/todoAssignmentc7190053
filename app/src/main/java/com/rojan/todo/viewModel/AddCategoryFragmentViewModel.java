@@ -4,18 +4,25 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
 
+import java.util.List;
+
 public class AddCategoryFragmentViewModel extends AndroidViewModel {
 
+    private LiveData<List<Category>> listCategory;
     private String categoryName;
     private int categoryId;
 
     public AddCategoryFragmentViewModel(@NonNull Application application) {
         super(application);
+        AppDatabase database = AppDatabase.getInstance(application);
+        Repository repository = new Repository(database);
+        listCategory = repository.loadAllCategoryById();
     }
 
     public void saveIntoDatabase(){
@@ -28,6 +35,10 @@ public class AddCategoryFragmentViewModel extends AndroidViewModel {
             repository.insertCategory(category);
         }
 
+    }
+
+    public LiveData<List<Category>> getListCategory() {
+        return listCategory;
     }
 
     public int getCategoryId() {
