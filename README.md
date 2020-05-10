@@ -1,3 +1,3 @@
 this is title
 
-[Add Category](addCategory.gif)
+![Add Category](addCategory.gif)
