@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.rojan.todo.ListCategory;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
