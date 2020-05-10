@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.rojan.todo.viewModel.TodoListViewModel;
 
 public class TodoList extends AppCompatActivity {
 
+
     private TodoListViewModel viewModel;
 
     public static Intent makeIntent(Context context){
@@ -34,6 +36,8 @@ public class TodoList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+//        launchScreen();
+
         viewModel = ViewModelProviders.of(this).get(TodoListViewModel.class);
         if(savedInstanceState == null){
             loadFragment();
