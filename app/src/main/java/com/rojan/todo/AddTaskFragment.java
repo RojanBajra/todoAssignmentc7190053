@@ -76,7 +76,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_task, container, false);
+        final View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)){
             taskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
         }
@@ -93,6 +93,8 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
                 @Override
                 public void onChanged(final Task task) {
                     viewModel.getTaskToEdit().removeObserver(this);
+                    viewModel.setValDate(task.getTaskDate());
+                    viewModel.setValTime(task.getTaskTime());
 
                     viewModel.getListCategory().observe(getActivity(), new Observer<List<Category>>() {
                         @Override
@@ -201,6 +203,7 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
         txtDescription.setText(task.getTaskDescription());
         txtTaskDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(task.getTaskDate()));
         txtTaskTime.setText(task.getTaskTime().getHours() + ":" + task.getTaskTime().getMinutes());
+        System.out.println("edited date yeta cha " + task.getTaskDate());
         setPriority(task);
         setCategory(task);
     }

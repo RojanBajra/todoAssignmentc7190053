@@ -109,6 +109,7 @@ public class AddTaskFragmentViewModel extends AndroidViewModel {
             );
             repository.insertTask(task);
         }else{
+            System.out.println("yo editted ddate ho " + getValDate());
             final Task task = new Task(
                     getTaskToEdit().getValue().getTaskId(),
                     getValTitle(),
