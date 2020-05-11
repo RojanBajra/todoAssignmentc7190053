@@ -6,20 +6,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.rojan.todo.database.AppDatabase;
-import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.utils.DateFormatUtils;
@@ -79,17 +73,14 @@ public class SingleTaskFragment extends Fragment {
             taskId = (int) args.getInt(TASK_ID);
             pageNumber = (int) args.getInt(PAGE_NUMBER);
 
-            AppDatabase database = AppDatabase.getInstance(getActivity());
-            final Repository repository = new Repository(database);
-
-            taskDataSingle = repository.loadTaskById(taskId);
+            taskDataSingle = viewModel.loadTaskById(taskId);
 
             taskDataSingle.observe(getActivity(), new Observer<Task>() {
                 @Override
                 public void onChanged(Task task) {
                     taskDataSingle.removeObserver(this);
                     taskData = task;
-                    listCategory = repository.loadEachCategoryById(taskData.getCategoryId());
+                    listCategory = viewModel.loadEachCategoryById(taskData.getCategoryId());
                     listCategory.observe(getActivity(), new Observer<Category>() {
                         @Override
                         public void onChanged(Category category) {

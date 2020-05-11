@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.rojan.todo.R;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
+import com.rojan.todo.model.Category;
 import com.rojan.todo.model.Task;
 
 import java.util.List;
@@ -42,6 +43,14 @@ public class SingleTaskFragmentViewModel extends AndroidViewModel {
                 lblPriority.setTextColor(ContextCompat.getColor(getApplication(), R.color.colorYellowForText));
                 return "LOW";
         }
+    }
+
+    public LiveData<Task>  loadTaskById(int taskId){
+        return repository.loadTaskById(taskId);
+    }
+
+    public LiveData<Category> loadEachCategoryById(int categoryId){
+        return repository.loadEachCategoryById(categoryId);
     }
 
 }
