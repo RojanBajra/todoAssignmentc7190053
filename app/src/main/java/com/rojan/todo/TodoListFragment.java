@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.rojan.todo.adapter.TodoListAdapter;
 import com.rojan.todo.model.Task;
 import com.rojan.todo.viewModel.TodoListFragmentViewModel;
@@ -35,6 +37,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
     private FloatingActionButton floatingActionButton;
     private TodoListAdapter adapter;
     private TodoListFragmentViewModel viewModel;
+    private CoordinatorLayout coordinatorLayout;
 
     public TodoListFragment() {
 
@@ -48,6 +51,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         init(view);
         setupAdapter();
         setupSwipeAction();
+        createSnackBar();
         return view;
     }
 
@@ -61,6 +65,28 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
         viewModel.completeTask(!completedValue, taskId);
         String showMsg = (completedValue ? "Incomplete" : "Complete");
         Toast.makeText(getContext(),  "Task " + taskName+ " marked " + showMsg, Toast.LENGTH_LONG).show();
+    }
+
+    private void createSnackBar(){
+        viewModel.snackBarShow.observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(final Boolean showSnack) {
+                if (showSnack) {
+                    Snackbar.make(coordinatorLayout, "Task Deleted", Snackbar.LENGTH_LONG)
+                            .setAction(
+                                    "UNDO",
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            viewModel.insertRecent();
+
+                                        }
+                                    }
+                            ).show();
+                    viewModel.snackBarShow.setValue(false);
+                }
+            }
+        });
     }
 
     private void setupSwipeAction() {
@@ -88,6 +114,7 @@ public class TodoListFragment extends Fragment implements TodoListAdapter.OnTask
                 btnAddTask();
             }
         });
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.frameCoordinator);
 
         viewModel = ViewModelProviders.of(getActivity()).get(TodoListFragmentViewModel.class);
         retrieveTasks();

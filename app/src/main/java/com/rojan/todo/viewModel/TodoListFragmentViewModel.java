@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
@@ -21,12 +22,19 @@ public class TodoListFragmentViewModel extends AndroidViewModel {
 
     private LiveData<List<Task>> listOfTask;
     private Repository repository;
+    public MutableLiveData<Boolean> snackBarShow;
+    private Task recentData;
 
     public TodoListFragmentViewModel(@NonNull Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
         repository = new Repository(database);
         listOfTask = (repository.loadAllTask());
+        snackBarShow =  new MutableLiveData<>();
+    }
+
+    public MutableLiveData<Boolean> getSnackBarShow() {
+        return snackBarShow;
     }
 
     public LiveData<List<Task>> getListOfTask() {
@@ -38,7 +46,13 @@ public class TodoListFragmentViewModel extends AndroidViewModel {
     }
 
     public void deleteTask(Task task){
+        recentData = task;
         repository.deleteTheTask(task);
+        snackBarShow.setValue(true);
+    }
+
+    public void insertRecent(){
+        repository.insertTask(recentData);
     }
 
 }
