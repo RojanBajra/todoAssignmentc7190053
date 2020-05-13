@@ -135,7 +135,6 @@ public class AddTaskFragment extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(i, i1);
         Date c = Calendar.getInstance().getTime();
         calendar.set(c.getYear(), c.getMonth(), c.getDate(), i, i1);
         String timeVal = i + ":" + i1;
