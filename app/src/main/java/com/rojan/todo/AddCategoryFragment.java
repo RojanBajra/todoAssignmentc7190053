@@ -83,11 +83,8 @@ public class AddCategoryFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                AppDatabase database = AppDatabase.getInstance(getActivity());
-                Repository repository = new Repository(database);
                 String catName = viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryName();
-                repository.deleteTheTaskByCategoryId(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryId());
-                repository.deleteTheCategory(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()));
+                viewModel.deleteCategory(viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()), viewModel.getListCategory().getValue().get(viewHolder.getAdapterPosition()).getCategoryId());
                 Toast.makeText(getContext(), "All the tasks have been deleted for " + catName, Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);

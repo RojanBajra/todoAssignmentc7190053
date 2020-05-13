@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.rojan.todo.database.AppDatabase;
 import com.rojan.todo.database.Repository;
 import com.rojan.todo.model.Category;
+import com.rojan.todo.model.Task;
 
 import java.util.List;
 
@@ -17,11 +18,12 @@ public class AddCategoryFragmentViewModel extends AndroidViewModel {
     private LiveData<List<Category>> listCategory;
     private String categoryName;
     private int categoryId;
+    private Repository repository;
 
     public AddCategoryFragmentViewModel(@NonNull Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
-        Repository repository = new Repository(database);
+        repository = new Repository(database);
         listCategory = repository.loadAllCategory();
     }
 
@@ -35,6 +37,11 @@ public class AddCategoryFragmentViewModel extends AndroidViewModel {
             repository.insertCategory(category);
         }
 
+    }
+
+    public void deleteCategory(Category category, int categoryId){
+        repository.deleteTheCategory(category);
+        repository.deleteTheTaskByCategoryId(categoryId);
     }
 
     public LiveData<List<Category>> getListCategory() {
