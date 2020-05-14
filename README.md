@@ -3,7 +3,7 @@
 
 ---
 
-### Framework of the Application
+### FRAMEWORK OF THE APPLICATION
 <img src='images/structure.jpg' width = 700/>
 
 ---
@@ -15,7 +15,7 @@ This application consists of a database with 2 entities: Task and Category. The 
 
 ---
 
-### App Icon
+### APP ICON
 The app icon designed for the application is shown as below.
 
 <img src='images/appIcon.png' width = 150/>&nbsp;
@@ -23,10 +23,28 @@ The app icon designed for the application is shown as below.
 
 ---
 
-### My Mobile Application
+### MY MOBILE APPLICATION
 <img src = "images/banner.jpg" />
 
 ---
 
+### PAGES IN MY APPLICATION
+#### Task List
+<img src='images/taskList.jpg' width = 350/>
+
+#### Category List
+<img src='images/category.jpg' width = 350/>
+
+#### Single Task
+<img src='images/singleTask.jpg' width = 350/>
+
 #### Add Task
 <img src='images/addTask.jpg' width = 350/>
+
+#### Edit Task
+<img src='images/editTask.jpg' width = 350/>
+
+
+|Task List|Category List|Single Task|Add Task|Edit Task|
+|:-:|:-:|:-:|:-:|:-:|
+|<img src='images/taskList.jpg' width = 350/> |<img src='images/category.jpg' width = 350/>|<img src='images/singleTask.jpg' width = 350/> |<img src='images/addTask.jpg' width = 350/>|<img src='images/editTask.jpg' width = 350/> |
