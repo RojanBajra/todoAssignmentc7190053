@@ -11,6 +11,12 @@
 ### Entity Relationship Diagram (ERD)
 <img src='images/erd.jpg' width = 700/>
 
+---
+
+### App Icon
+The app icon designed for the application is shown as below.
+
+
 
 #### Add Task
 <img src='images/addTask.jpg' width = 350/>
