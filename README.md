@@ -1,3 +1,3 @@
 Add Task
 
-![Add Task](images/addTask.jpg =100x)
+<img src='images/addTask.jpg' width = 100 />
