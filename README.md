@@ -93,32 +93,34 @@ The app icon designed for the application is shown as below.
 #### Complete Task
 <img src='images/completedTask.gif' width = 350/>
 
+---
+
 ### **ADDITIONAL FEATURE**
-### Swiping in single view to display next task
+#### Swiping in single view to display next task
 <img src='images/viewPager.gif' width = 350/>
 
-### Launch screen
+#### Launch screen
 <img src='images/launchScreen.gif' width = 350/>
 
-### Application Icon
+#### Application Icon
 <img src='images/appIcon.png' width = 150/>
 
-### Displaying and Adding Category List
+#### Displaying and Adding Category List
 <img src='images/addCategory.gif' width = 350/>
 
-### Deleting Category (Deletes Task under it's Category)
+#### Deleting Category (Deletes Task under it's Category)
 <img src='images/deleteCategoryAndTaskRemoved.gif' width = 350/>
 
-### Long press a task to complete it
+#### Long press a task to complete it
 <img src='images/completedTask.gif' width = 350/>
 
-### Delete All Task
+#### Delete All Task
 <img src='images/deleteAll.gif' width = 350/>
 
-### Delete Completed
+#### Delete Completed
 <img src='images/deleteCompleted.gif' width = 350/>
 
-### Undo with the help of Snackbar
+#### Undo with the help of Snackbar
 <img src='images/undo.gif' width = 350/>
 
 
