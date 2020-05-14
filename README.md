@@ -1,3 +1,3 @@
 Add Task
 
-![Add Task](images/addTask.jpg | =100)
+![Add Task](images/addTask.jpg =100x)
