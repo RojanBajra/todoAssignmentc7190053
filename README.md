@@ -16,8 +16,8 @@
 ### App Icon
 The app icon designed for the application is shown as below.
 
-
-<img src='images/appIconInMobile.jpg' width = 350/> <img src='images/appIcon.png' width = 150/>
+<img src='images/appIcon.png' width = 150/>
+<img src='images/appIconInMobile.jpg' width = 350/>
 
 
 
