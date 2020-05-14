@@ -1,3 +1,3 @@
 Add Task
 
-<img src='images/addTask.jpg' width = 100 />
+<img src='images/addTask.jpg' width = 350 />
