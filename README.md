@@ -101,10 +101,10 @@ The app icon designed for the application is shown as below.
 <img src='images/launchScreen.gif' width = 350/>
 
 ### Application Icon
-<img src='images/appIcon.jpg' width = 150/>
+<img src='images/appIcon.png' width = 150/>
 
 ### Displaying and Adding Category List
-<img src='images/addCategory.jpg' width = 350/>
+<img src='images/addCategory.gif' width = 350/>
 
 ### Deleting Category (Deletes Task under it's Category)
 <img src='images/deleteCategoryAndTaskRemoved.gif' width = 350/>
