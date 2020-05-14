@@ -44,9 +44,37 @@ The app icon designed for the application is shown as below.
 #### Edit Task
 <img src='images/editTask.jpg' width = 350/>
 
+#### Undo Deleted Task
+<img src='images/undo.jpg' width = 350/>
+
 ---
 
 ### FEATURES IN MY APPLICATION
+#### **Basic Feature**
+- Displaying Task List
+- Displaying Single Task
+- Adding Task
+- Editing Task
+- Deleting Task
+- Marking Completed Task
+
+#### **Additional Feature**
+- Swiping in single view to display next task
+- Launch screen
+- Application Icon
+- Category Entity in the database
+  - Displaying Category List
+  - Adding Category
+  - Deleting Category (Deletes Task under it's Category)
+- Long press a task to complete it
+- Delete All
+- Delete Completed
+- Undo with the help of Snackbar
+
+---
+
+### **BASIC FEATURE**
+
 #### Displaying Task
 <img src='images/taskListView.gif' width = 350/>
 
@@ -64,6 +92,35 @@ The app icon designed for the application is shown as below.
 
 #### Complete Task
 <img src='images/completedTask.gif' width = 350/>
+
+### **ADDITIONAL FEATURE**
+### Swiping in single view to display next task
+<img src='images/viewPager.gif' width = 350/>
+
+### Launch screen
+<img src='images/launchScreen.gif' width = 350/>
+
+### Application Icon
+<img src='images/appIcon.jpg' width = 150/>
+
+### Displaying and Adding Category List
+<img src='images/addCategory.jpg' width = 350/>
+
+### Deleting Category (Deletes Task under it's Category)
+<img src='images/deleteCategoryAndTaskRemoved.gif' width = 350/>
+
+### Long press a task to complete it
+<img src='images/completedTask.gif' width = 350/>
+
+### Delete All Task
+<img src='images/deleteAll.gif' width = 350/>
+
+### Delete Completed
+<img src='images/deleteCompleted.gif' width = 350/>
+
+### Undo with the help of Snackbar
+<img src='images/undo.gif' width = 350/>
+
 
 |Task List|Category List|Single Task|Add Task|Edit Task|
 |:-:|:-:|:-:|:-:|:-:|
