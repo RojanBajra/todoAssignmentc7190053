@@ -44,6 +44,26 @@ The app icon designed for the application is shown as below.
 #### Edit Task
 <img src='images/editTask.jpg' width = 350/>
 
+---
+
+### FEATURES IN MY APPLICATION
+#### Displaying Task
+<img src='images/taskListView.gif' width = 350/>
+
+#### Displaying Single Task
+<img src='images/singleTask.gif' width = 350/>
+
+#### Adding Task
+<img src='images/addTask.gif' width = 350/>
+
+#### Edit Task
+<img src='images/editTask.gif' width = 350/>
+
+#### Delete Task
+<img src='images/deleteTask.gif' width = 350/>
+
+#### Complete Task
+<img src='images/completedTask.gif' width = 350/>
 
 |Task List|Category List|Single Task|Add Task|Edit Task|
 |:-:|:-:|:-:|:-:|:-:|
