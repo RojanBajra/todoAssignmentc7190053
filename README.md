@@ -1,6 +1,9 @@
 # Todo Application
 ### Rojan Bajracharya (c7190053)
 
+### MY MOBILE APPLICATION
+<img src = "images/banner.jpg" />
+
 ---
 
 ### FRAMEWORK OF THE APPLICATION
@@ -18,38 +21,28 @@ This application consists of a database with 2 entities: Task and Category. The 
 ### APP ICON
 The app icon designed for the application is shown as below.
 
-<img src='images/appIcon.png' width = 150/>&nbsp;
-<img src='images/appIconInMobile.jpg' width = 350/>
-
----
-
-### MY MOBILE APPLICATION
-<img src = "images/banner.jpg" />
+<img src='images/appIcon.png' width = 150/>
 
 ---
 
 ### PAGES IN MY APPLICATION
-#### Task List
-<img src='images/taskList.jpg' width = 350/>
+|Task List|Category List|
+|:-:|:-:|
+|<img src='images/taskList.jpg' width = 350/>|<img src='images/category.jpg' width = 350/>|
 
-#### Category List
-<img src='images/category.jpg' width = 350/>
+|Single Task|Add Task|
+|:-:|:-:|
+|<img src='images/singleTask.jpg' width = 350/>|<img src='images/addTask.jpg' width = 350/>|
 
-#### Single Task
-<img src='images/singleTask.jpg' width = 350/>
-
-#### Add Task
-<img src='images/addTask.jpg' width = 350/>
-
-#### Edit Task
-<img src='images/editTask.jpg' width = 350/>
-
-#### Undo Deleted Task
-<img src='images/undo.jpg' width = 350/>
+|Edit Task|Undo Deleted Task|
+|:-:|:-:|
+|<img src='images/editTask.jpg' width = 350/>|<img src='images/undo.jpg' width = 350/>|
 
 ---
 
 ### FEATURES IN MY APPLICATION
+#### To do Application
+In this application I divided the features into Basic Feature and Additional Feature.
 #### **Basic Feature**
 - Displaying Task List
 - Displaying Single Task
@@ -102,9 +95,6 @@ The app icon designed for the application is shown as below.
 #### Launch screen
 <img src='images/launchScreen.gif' width = 350/>
 
-#### Application Icon
-<img src='images/appIcon.png' width = 150/>
-
 #### Displaying and Adding Category List
 <img src='images/addCategory.gif' width = 350/>
 
@@ -122,8 +112,3 @@ The app icon designed for the application is shown as below.
 
 #### Undo with the help of Snackbar
 <img src='images/undo.gif' width = 350/>
-
-
-|Task List|Category List|Single Task|Add Task|Edit Task|
-|:-:|:-:|:-:|:-:|:-:|
-|<img src='images/taskList.jpg' width = 350/> |<img src='images/category.jpg' width = 350/>|<img src='images/singleTask.jpg' width = 350/> |<img src='images/addTask.jpg' width = 350/>|<img src='images/editTask.jpg' width = 350/> |
